@@ -1,0 +1,47 @@
+<Project>
+  <ItemGroup>
+    <PackageVersion Include="coverlet.collector" Version="6.0.0" />
+    <PackageVersion Include="FluentAssertions.Analyzers" Version="0.17.5" />
+    <PackageVersion Include="xunit.analyzers" Version="1.1.0" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" />
+    <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.6.40" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
+    <PackageVersion Include="Roslynator.Analyzers" Version="4.3.0" />
+    <PackageVersion Include="Roslynator.CodeAnalysis.Analyzers" Version="4.3.0" />
+    <PackageVersion Include="Roslynator.Formatting.Analyzers" Version="4.3.0" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.2.0.71021" />
+    <PackageVersion Include="Meziantou.Analyzer" Version="2.0.56" />
+    <PackageVersion Include="SecurityCodeScan.VS2019" Version="5.6.7" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
+    <PackageVersion Include="FluentValidation" Version="11.5.1" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+    <PackageVersion Include="O9d.AspNet.FluentValidation" Version="0.1.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
+    <PackageVersion Include="FluentAssertions" Version="6.11.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.5" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageVersion Include="Respawn" Version="6.0.0" />
+    <PackageVersion Include="Testcontainers" Version="3.2.0" />
+    <PackageVersion Include="Testcontainers.SqlEdge" Version="3.2.0" />
+    <PackageVersion Include="WireMock.Net" Version="1.5.28" />
+    <PackageVersion Include="WireMock.Net.Testcontainers" Version="1.5.28" />
+    <PackageVersion Include="xunit" Version="2.4.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
+    <PackageVersion Include="coverlet.collector" Version="3.1.2" />
+    <PackageVersion Include="Refit" Version="7.0.0-beta.1" />
+    <PackageVersion Include="Refit.HttpClientFactory" Version="7.0.0-beta.1" />
+    <PackageVersion Include="Refit.Newtonsoft.Json" Version="7.0.0-beta.1" />
+  </ItemGroup>
+</Project>
