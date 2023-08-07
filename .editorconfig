@@ -694,6 +694,7 @@ csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
 # SA ---------------------------------------------------
 dotnet_diagnostic.SA1135.severity = warning
 dotnet_diagnostic.SA1116.severity = suggestion
+csharp_style_throw_expression = true:suggestion
 
 
 [*.{cs,vb}]
@@ -758,6 +759,7 @@ dotnet_diagnostic.CA1031.severity = suggestion
 dotnet_diagnostic.CA2227.severity = suggestion
 dotnet_diagnostic.CA1002.severity = suggestion
 dotnet_diagnostic.CA1848.severity = suggestion
+dotnet_diagnostic.CA1303.severity = suggestion
 dotnet_diagnostic.CA2254.severity = silent
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
 dotnet_style_prefer_conditional_expression_over_assignment = true:silent
@@ -768,4 +770,9 @@ dotnet_diagnostic.CS9057.severity = suggestion
 dotnet_diagnostic.CA1720.severity = suggestion
 dotnet_diagnostic.CA1715.severity = suggestion
 dotnet_diagnostic.NU1602.severity = suggestion
-
+dotnet_style_prefer_conditional_expression_over_return = true:silent
+dotnet_style_explicit_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+dotnet_style_prefer_compound_assignment = true:suggestion
+dotnet_style_prefer_simplified_interpolation = true:suggestion

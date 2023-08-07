@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Utilities", "1.Utilities", "{EEF9BA03-3ED4-4CC9-B2D1-CB7036B6FB02}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Services", "2.Services", "{48DC90F2-8417-4145-A9E5-9B912D6E8B25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationRegistry", "src\ApplicationRegistry\ApplicationRegistry.csproj", "{95F91DD7-E43D-4BEA-A95D-9330D58C38E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Push", "src\Push\Push.csproj", "{B69CF975-8A19-48AF-ABA8-C05446F224A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationRegistry", "ApplicationRegistry", "{87B63DA5-821F-4A85-85F4-292359B4D5C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebHooks", "WebHooks", "{D770DD54-246F-42F6-B886-36DD1687AF4C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Push", "Push", "{31E5F660-09D0-41F9-B7C1-E3C0042AE5F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.SolutionItems", "0.SolutionItems", "{9239B730-181C-4212-BBFF-BD75DD3541DC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		AssemblyInfo.cs = AssemblyInfo.cs
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notifications.Host.Web", "src\Notifications.Host.Web\Notifications.Host.Web.csproj", "{23F57FC0-C89A-4DEE-BF28-8654385A2173}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHooks", "src\WebHooks\WebHooks.csproj", "{6147D897-08EF-4AD6-9F3E-9B14151860E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventProcessor", "EventProcessor", "{8E2864B5-A4BD-4A78-99FC-73E834D028D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "src\Shared\Shared.csproj", "{721689D9-98F3-436E-85FB-8954078A3999}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventProcessor", "src\EventProcessor\EventProcessor.csproj", "{5A6FAD69-4167-450F-834E-2DF48BE97077}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95F91DD7-E43D-4BEA-A95D-9330D58C38E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F91DD7-E43D-4BEA-A95D-9330D58C38E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F91DD7-E43D-4BEA-A95D-9330D58C38E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F91DD7-E43D-4BEA-A95D-9330D58C38E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B69CF975-8A19-48AF-ABA8-C05446F224A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B69CF975-8A19-48AF-ABA8-C05446F224A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B69CF975-8A19-48AF-ABA8-C05446F224A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B69CF975-8A19-48AF-ABA8-C05446F224A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23F57FC0-C89A-4DEE-BF28-8654385A2173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23F57FC0-C89A-4DEE-BF28-8654385A2173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23F57FC0-C89A-4DEE-BF28-8654385A2173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23F57FC0-C89A-4DEE-BF28-8654385A2173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6147D897-08EF-4AD6-9F3E-9B14151860E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6147D897-08EF-4AD6-9F3E-9B14151860E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6147D897-08EF-4AD6-9F3E-9B14151860E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6147D897-08EF-4AD6-9F3E-9B14151860E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{721689D9-98F3-436E-85FB-8954078A3999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{721689D9-98F3-436E-85FB-8954078A3999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{721689D9-98F3-436E-85FB-8954078A3999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{721689D9-98F3-436E-85FB-8954078A3999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A6FAD69-4167-450F-834E-2DF48BE97077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6FAD69-4167-450F-834E-2DF48BE97077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A6FAD69-4167-450F-834E-2DF48BE97077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A6FAD69-4167-450F-834E-2DF48BE97077}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{95F91DD7-E43D-4BEA-A95D-9330D58C38E9} = {87B63DA5-821F-4A85-85F4-292359B4D5C3}
+		{B69CF975-8A19-48AF-ABA8-C05446F224A7} = {31E5F660-09D0-41F9-B7C1-E3C0042AE5F7}
+		{87B63DA5-821F-4A85-85F4-292359B4D5C3} = {48DC90F2-8417-4145-A9E5-9B912D6E8B25}
+		{D770DD54-246F-42F6-B886-36DD1687AF4C} = {48DC90F2-8417-4145-A9E5-9B912D6E8B25}
+		{31E5F660-09D0-41F9-B7C1-E3C0042AE5F7} = {48DC90F2-8417-4145-A9E5-9B912D6E8B25}
+		{23F57FC0-C89A-4DEE-BF28-8654385A2173} = {48DC90F2-8417-4145-A9E5-9B912D6E8B25}
+		{6147D897-08EF-4AD6-9F3E-9B14151860E4} = {D770DD54-246F-42F6-B886-36DD1687AF4C}
+		{8E2864B5-A4BD-4A78-99FC-73E834D028D2} = {48DC90F2-8417-4145-A9E5-9B912D6E8B25}
+		{721689D9-98F3-436E-85FB-8954078A3999} = {EEF9BA03-3ED4-4CC9-B2D1-CB7036B6FB02}
+		{5A6FAD69-4167-450F-834E-2DF48BE97077} = {8E2864B5-A4BD-4A78-99FC-73E834D028D2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEAE8476-4CF9-428C-AAF3-FAA20C6666CD}
+	EndGlobalSection
+EndGlobal

@@ -10,12 +10,12 @@
     <PackageVersion Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" />
-    <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.6.40" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
-    <PackageVersion Include="Roslynator.Analyzers" Version="4.3.0" />
-    <PackageVersion Include="Roslynator.CodeAnalysis.Analyzers" Version="4.3.0" />
-    <PackageVersion Include="Roslynator.Formatting.Analyzers" Version="4.3.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0-preview1.23165.1" />
+    <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.1-preview" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.5-beta1.23320.2" />
+    <PackageVersion Include="Roslynator.Analyzers" Version="4.4.0" />
+    <PackageVersion Include="Roslynator.CodeAnalysis.Analyzers" Version="4.4.0" />
+    <PackageVersion Include="Roslynator.Formatting.Analyzers" Version="4.4.0" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.2.0.71021" />
     <PackageVersion Include="Meziantou.Analyzer" Version="2.0.56" />
     <PackageVersion Include="SecurityCodeScan.VS2019" Version="5.6.7" />
