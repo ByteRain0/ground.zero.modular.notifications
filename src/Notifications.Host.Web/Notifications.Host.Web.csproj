@@ -1,2 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="..\ApplicationRegistry\ApplicationRegistry.csproj" />
+    <ProjectReference Include="..\Push\Push.csproj" />
+    <ProjectReference Include="..\WebHooks\WebHooks.csproj" />
+  </ItemGroup>
 </Project>
