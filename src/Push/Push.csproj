@@ -3,4 +3,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Routing\" />
+  </ItemGroup>
 </Project>

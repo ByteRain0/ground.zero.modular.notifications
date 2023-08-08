@@ -2,7 +2,7 @@ using ApplicationRegistry.Contracts.DTOs;
 
 namespace ApplicationRegistry.Contracts;
 
-public interface IEventAccessor
+public interface IEventsAccessor
 {
     Task<bool> CreateAsync(Event @event);
 }

@@ -2,7 +2,7 @@ using ApplicationRegistry.Contracts.DTOs;
 
 namespace ApplicationRegistry.Contracts;
 
-public interface IApplicationAccessor
+public interface IApplicationsAccessor
 {
     Task<List<Application>> GetListAsync(CancellationToken cancellationToken);
 
