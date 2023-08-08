@@ -1,4 +1,4 @@
-namespace Shared;
+namespace Shared.RabitMQ;
 
 public static class RoutingKeys
 {

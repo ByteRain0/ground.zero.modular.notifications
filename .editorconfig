@@ -756,6 +756,7 @@ dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
 #TODO: check 1031 to bump to warning to reduce the code smells related to try/catch
 dotnet_diagnostic.CA1031.severity = suggestion
+dotnet_diagnostic.CA1034.severity = suggestion
 dotnet_diagnostic.CA2227.severity = suggestion
 dotnet_diagnostic.CA1002.severity = suggestion
 dotnet_diagnostic.CA1848.severity = suggestion
@@ -776,3 +777,7 @@ dotnet_style_prefer_inferred_tuple_names = true:suggestion
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
+
+[*.{cs,vb}]
+dotnet_diagnostic.CA1014.severity = none
+

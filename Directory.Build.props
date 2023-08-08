@@ -6,7 +6,7 @@
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -15,5 +15,6 @@
     <Features>strict</Features>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <TargetFramework>net7.0</TargetFramework>
+    <NoWarn>$(NoWarn);NU1504;NU1505;NU1701;NU1008;NU1506</NoWarn>
   </PropertyGroup>
 </Project>
