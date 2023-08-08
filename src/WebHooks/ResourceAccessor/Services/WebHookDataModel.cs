@@ -1,4 +1,4 @@
-namespace WebHooks.ResourceAccessor.Service;
+namespace WebHooks.ResourceAccessor.Services;
 
 public class WebHookDataModel
 {
