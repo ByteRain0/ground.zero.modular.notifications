@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Push.Infrastructure;
+namespace Push.Service.Infrastructure;
 
 public static class PushManagerInstaller
 {

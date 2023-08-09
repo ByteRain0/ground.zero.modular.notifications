@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WebHooks.WebHooksRepository.Infrastructure;
+namespace WebHooks.WebHooksRepository.Services.Infrastructure;
 
 public static class WebHooksRepositoryInstaller
 {

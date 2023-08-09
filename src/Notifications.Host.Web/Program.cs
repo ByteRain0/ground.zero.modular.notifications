@@ -1,9 +1,9 @@
-using ApplicationRegistry.Infrastructure;
-using Push.Infrastructure;
+using ApplicationRegistry.Services.Infrastructure;
 using Push.Routing;
-using WebHooks.WebHooksRepository.Infrastructure;
-using WebHooks.WebHooksService.Infrastructure;
+using Push.Service.Infrastructure;
+using WebHooks.WebHooksRepository.Services.Infrastructure;
 using WebHooks.WebHooksService.Routing;
+using WebHooks.WebHooksService.Services.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,8 +1,7 @@
 using ApplicationRegistry.Contracts;
-using ApplicationRegistry.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ApplicationRegistry.Infrastructure;
+namespace ApplicationRegistry.Services.Infrastructure;
 
 public static class ApplicationRegistryInstaller
 {
