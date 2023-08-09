@@ -4,7 +4,7 @@ namespace Push.Infrastructure;
 
 public static class PushManagerInstaller
 {
-    public static IServiceCollection AddPushManager(this IServiceCollection services)
+    public static IServiceCollection AddPushService(this IServiceCollection services)
     {
         return services;
     }

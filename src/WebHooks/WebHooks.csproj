@@ -5,4 +5,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApplicationRegistry\ApplicationRegistry.csproj" />
+  </ItemGroup>
 </Project>

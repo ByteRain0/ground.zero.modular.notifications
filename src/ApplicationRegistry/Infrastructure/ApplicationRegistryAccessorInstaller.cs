@@ -6,10 +6,10 @@ namespace ApplicationRegistry.Infrastructure;
 
 public static class ApplicationRegistryAccessorInstaller
 {
-    public static IServiceCollection AddApplicationRegistryAccessor(this IServiceCollection services)
+    public static IServiceCollection AddApplicationRegistryRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IApplicationsAccessor, ApplicationAccessor>();
-        services.AddScoped<IEventsAccessor, EventsAccessor>();
+        services.AddScoped<IApplicationsRepository, ApplicationRepository>();
+        services.AddScoped<IEventsRepository, EventsRepository>();
         return services;
     }
 }

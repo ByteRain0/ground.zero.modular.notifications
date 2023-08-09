@@ -4,7 +4,7 @@ namespace Push.Infrastructure;
 
 public static class PushManagerRoutingInstaller
 {
-    public static IApplicationBuilder UsePushManagerEndpoints(this IApplicationBuilder app)
+    public static IApplicationBuilder UsePushServiceEndpoints(this IApplicationBuilder app)
     {
         return app;
     }

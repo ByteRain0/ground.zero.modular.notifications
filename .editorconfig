@@ -75,7 +75,7 @@ dotnet_diagnostic.CA2200.severity = warning
 dotnet_diagnostic.IDE0005.severity = warning
 
 # IDE0055: All formatting rules
-dotnet_diagnostic.IDE0055.severity = warning
+dotnet_diagnostic.IDE0055.severity = suggestion
 
 # IDE0051: Remove unused private members
 dotnet_diagnostic.IDE0051.severity = warning
