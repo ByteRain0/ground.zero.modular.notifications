@@ -1,6 +1,7 @@
 using ApplicationRegistry.Services.Infrastructure;
 using Push.Routing;
 using Push.Service.Infrastructure;
+using Shared.RabitMQ;
 using WebHooks.WebHooksRepository.Services.Infrastructure;
 using WebHooks.WebHooksService.Routing;
 using WebHooks.WebHooksService.Services.Infrastructure;
@@ -8,11 +9,14 @@ using WebHooks.WebHooksService.Services.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Register modules
+
 builder.Services
     .AddWebHooksService()
     .AddWebHooksRepository()
     .AddApplicationRegistryService()
-    .AddPushService();
+    .AddPushService()
+    .AddHostedService<WorkerService>()
+    .AddRabitMQ(builder.Configuration);
 
 var app = builder.Build();
 
