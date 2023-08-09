@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace Push.Infrastructure;
+namespace Push.Routing;
 
 public static class PushManagerRoutingInstaller
 {

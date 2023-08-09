@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationRegistry.Infrastructure;
 
-public static class ApplicationRegistryAccessorInstaller
+public static class ApplicationRegistryInstaller
 {
-    public static IServiceCollection AddApplicationRegistryRepositories(this IServiceCollection services)
+    public static IServiceCollection AddApplicationRegistryService(this IServiceCollection services)
     {
         services.AddScoped<IApplicationsRepository, ApplicationRepository>();
         services.AddScoped<IEventsRepository, EventsRepository>();

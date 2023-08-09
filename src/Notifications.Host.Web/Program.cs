@@ -1,5 +1,6 @@
 using ApplicationRegistry.Infrastructure;
 using Push.Infrastructure;
+using Push.Routing;
 using WebHooks.WebHooksRepository.Infrastructure;
 using WebHooks.WebHooksService.Infrastructure;
 using WebHooks.WebHooksService.Routing;
@@ -10,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddWebHooksService()
     .AddWebHooksRepository()
-    .AddApplicationRegistryRepositories()
+    .AddApplicationRegistryService()
     .AddPushService();
 
 var app = builder.Build();
