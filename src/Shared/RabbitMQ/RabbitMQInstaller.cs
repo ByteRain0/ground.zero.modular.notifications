@@ -2,15 +2,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 
-namespace Shared.RabitMQ;
+namespace Shared.RabbitMQ;
 
-public static class RabitMQInstaller
+public static class RabbitMQInstaller
 {
     public static IServiceCollection AddRabitMQ(this IServiceCollection services, IConfiguration configuration)
     {
         services.SetUpRabbitMQ(configuration);
-        services.AddSingleton<RabbitReceiver>();
-        services.AddSingleton<IRabbitSender, RabbitSender>();
+        services.AddSingleton<RabbitMQReceiver>();
+        services.AddSingleton<IMessageSender, MessageSender>();
         return services;
     }
 

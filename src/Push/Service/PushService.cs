@@ -1,4 +1,4 @@
-using Push.Contract;
+using Push.Contracts.Contract;
 
 namespace Push.Service;
 

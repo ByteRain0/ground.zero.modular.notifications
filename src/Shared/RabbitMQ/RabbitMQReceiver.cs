@@ -3,18 +3,18 @@ using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Shared.RabitMQ;
+namespace Shared.RabbitMQ;
 
 /// <summary>
 /// Register all listeners from the DI Container.
 /// </summary>
-public class RabbitReceiver
+public class RabbitMQReceiver
 {
     private readonly RabbitMQSettings _rabbitSettings;
     private readonly IModel _channel;
     private readonly List<IListener> _listeningServices;
 
-    public RabbitReceiver(IServiceProvider sp, RabbitMQSettings rabbitSettings, IModel channel)
+    public RabbitMQReceiver(IServiceProvider sp, RabbitMQSettings rabbitSettings, IModel channel)
     {
         _listeningServices = sp.GetServices<IListener>().ToList();
         _rabbitSettings = rabbitSettings;

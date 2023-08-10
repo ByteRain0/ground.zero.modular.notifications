@@ -1,28 +1,28 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Shared.RabitMQ;
+namespace Shared.RabbitMQ;
 
 public class WorkerService : BackgroundService
 {
     private readonly ILogger<WorkerService> _logger;
-    private readonly RabbitReceiver _rabbitReceiver;
-    public WorkerService(RabbitReceiver rabbitReceiver,
+    private readonly RabbitMQReceiver _rabbitMqReceiver;
+    public WorkerService(RabbitMQReceiver rabbitMqReceiver,
         ILogger<WorkerService> logger)
     {
         _logger = logger;
-        _rabbitReceiver = rabbitReceiver;
+        _rabbitMqReceiver = rabbitMqReceiver;
     }
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _rabbitReceiver.RegisterListeners();
-
+        _logger.LogDebug("Registering RabbitMQ listeners");
+        _rabbitMqReceiver.RegisterListeners();
         return Task.CompletedTask;
     }
 
     public override Task StopAsync(CancellationToken cancellationToken)
     {
-        _rabbitReceiver.Dispose();
+        _rabbitMqReceiver.Dispose();
         return Task.CompletedTask;
     }
 }

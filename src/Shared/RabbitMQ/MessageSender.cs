@@ -2,13 +2,13 @@ using System.Text;
 using System.Text.Json;
 using RabbitMQ.Client;
 
-namespace Shared.RabitMQ;
+namespace Shared.RabbitMQ;
 
-public class RabbitSender : IRabbitSender
+public class MessageSender : IMessageSender
 {
     private readonly IModel _channel;
     private readonly RabbitMQSettings _rabbitSettings;
-    public RabbitSender(RabbitMQSettings rabbitSettings, IModel channel)
+    public MessageSender(RabbitMQSettings rabbitSettings, IModel channel)
     {
         _channel = channel;
         _rabbitSettings = rabbitSettings;
