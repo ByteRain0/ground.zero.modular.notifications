@@ -6,4 +6,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="RabbitMQ.Client" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Messaging\IntegrationEvents\Emailing\" />
+    <Folder Include="Messaging\IntegrationEvents\Mobile\" />
+  </ItemGroup>
 </Project>

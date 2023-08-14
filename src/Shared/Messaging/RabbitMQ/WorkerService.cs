@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Shared.RabbitMQ;
+namespace Shared.Messaging.RabbitMQ;
 
 public class WorkerService : BackgroundService
 {

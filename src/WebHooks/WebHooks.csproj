@@ -7,8 +7,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationRegistry\ApplicationRegistry.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WebHooksService\Services\Handlers\" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 </Project>

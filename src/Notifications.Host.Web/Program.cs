@@ -1,7 +1,7 @@
 using ApplicationRegistry.Infrastructure;
 using Push.Routing;
 using Push.Service.Infrastructure;
-using Shared.RabbitMQ;
+using Shared.Messaging.RabbitMQ;
 using WebHooks.WebHooksRepository.Services.Infrastructure;
 using WebHooks.WebHooksService.Routing;
 using WebHooks.WebHooksService.Services.Infrastructure;

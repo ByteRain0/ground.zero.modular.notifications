@@ -8,12 +8,12 @@ namespace WebHooks.WebHooksService.Services.Handlers.CommandHandlers.CreateWebHo
 internal class CreateWebHookCommandHandler : IRequestHandler<CreateWebHookCommand>
 {
     private readonly IApplicationsRepository _applicationsRepository;
-    private readonly IWebHooksAccessor _webHooksAccessor;
+    private readonly IWebHooksRepository _webHooksRepository;
 
-    public CreateWebHookCommandHandler(IApplicationsRepository applicationsRepository, IWebHooksAccessor webHooksAccessor)
+    public CreateWebHookCommandHandler(IApplicationsRepository applicationsRepository, IWebHooksRepository webHooksRepository)
     {
         _applicationsRepository = applicationsRepository;
-        _webHooksAccessor = webHooksAccessor;
+        _webHooksRepository = webHooksRepository;
     }
 
     public async Task Handle(CreateWebHookCommand request, CancellationToken cancellationToken)
@@ -28,7 +28,7 @@ internal class CreateWebHookCommandHandler : IRequestHandler<CreateWebHookComman
             throw new InvalidOperationException("Application not found");
         }
 
-        var saved = await _webHooksAccessor.SaveAsync(new WebHook
+        var saved = await _webHooksRepository.SaveAsync(new WebHook
         {
             ClientCode = request.ClientCode,
             SourceCode = request.SourceCode,

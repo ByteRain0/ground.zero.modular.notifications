@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Json;
 using RabbitMQ.Client;
 
-namespace Shared.RabbitMQ;
+namespace Shared.Messaging.RabbitMQ;
 
 public class MessageSender : IMessageSender
 {
@@ -24,6 +24,5 @@ public class MessageSender : IMessageSender
             basicProperties: null,
             body: body);
         Console.WriteLine(" [x] Sent '{0}':'{1}'", key, message);
-
     }
 }

@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 
-namespace Shared.RabbitMQ;
+namespace Shared.Messaging.RabbitMQ;
 
 public static class RabbitMQInstaller
 {

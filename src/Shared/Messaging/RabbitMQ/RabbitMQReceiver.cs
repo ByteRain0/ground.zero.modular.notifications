@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Shared.RabbitMQ;
+namespace Shared.Messaging.RabbitMQ;
 
 /// <summary>
 /// Register all listeners from the DI Container.

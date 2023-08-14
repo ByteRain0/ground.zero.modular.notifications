@@ -1,6 +1,6 @@
 namespace WebHooks.WebHooksRepository.Contracts;
 
-public interface IWebHooksAccessor
+public interface IWebHooksRepository
 {
     Task<bool> SaveAsync(WebHook webHook);
 
