@@ -11,7 +11,13 @@ public class WebHooksRepository : IWebHooksRepository
 
     public Task<List<WebHook>> GetListAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new List<WebHook>()
+        {
+            new ()
+            {
+                Endpoint = new Uri("https://example.com")
+            }
+        });
     }
 
     public Task<bool> SaveAsync(WebHook webHook)

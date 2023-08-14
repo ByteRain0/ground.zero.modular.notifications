@@ -6,7 +6,7 @@ namespace Shared.Messaging.RabbitMQ;
 
 public static class RabbitMQInstaller
 {
-    public static IServiceCollection AddRabitMQ(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRabbitMQ(this IServiceCollection services, IConfiguration configuration)
     {
         services.SetUpRabbitMQ(configuration);
         services.AddSingleton<RabbitMQReceiver>();
@@ -16,12 +16,11 @@ public static class RabbitMQInstaller
 
     private static IServiceCollection SetUpRabbitMQ(this IServiceCollection services, IConfiguration config)
     {
+        // add the settings for later use by other classes via injection
+        // might use IOptions pattern together with snapshots for realtime update of the settings
         var configSection = config.GetSection("RabbitMQSettings");
-
         var settings = new RabbitMQSettings();
         configSection.Bind(settings);
-
-        // add the settings for later use by other classes via injection
         services.AddSingleton<RabbitMQSettings>(settings);
 
         // As the connection factory is disposable, need to ensure container disposes of it when finished

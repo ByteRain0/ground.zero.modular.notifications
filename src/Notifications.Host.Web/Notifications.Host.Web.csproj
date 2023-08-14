@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
     <ProjectReference Include="..\ApplicationRegistry\ApplicationRegistry.csproj" />
+    <ProjectReference Include="..\EventProcessor\EventProcessor.csproj" />
     <ProjectReference Include="..\Push\Push.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
     <ProjectReference Include="..\WebHooks\WebHooks.csproj" />
