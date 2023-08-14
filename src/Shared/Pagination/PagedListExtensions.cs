@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Shared.Pagination;
 
-public static class PagedListEfCoreExtensions<T>
+public static class PagedListExtensions<T>
 {
     public static async Task<PagedList<T>> CreateAsync(IQueryable<T> source, int page, int pageSize)
     {

@@ -1,4 +1,4 @@
-namespace Shared.Pagination;
+namespace Shared.Sorting;
 
 public class ISortedQuery
 {
@@ -7,11 +7,4 @@ public class ISortedQuery
     public string SortColumn { get; set; }
 
     public SortOrder SortOrder { get; set; }
-}
-
-public enum SortOrder
-{
-    None = 0,
-    Ascending = 1,
-    Descending = 2
 }
