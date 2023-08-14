@@ -1,6 +1,8 @@
 version: '3'
+name: notifications_system
 services:
   rabbitmq:
+    container_name: rabbitmq
     image: "rabbitmq:3-management"
     ports:
       - "5672:5672" # RabbitMQ default port
@@ -8,3 +10,25 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+
+  redis:
+    container_name: redis
+    image: "redis:latest"
+    ports:
+      - "6379:6379" # Redis default port
+
+  mongodb:
+    container_name: mongodatabase
+    image: "mongo:latest"
+    ports:
+      - "27017:27017" # MongoDB default port
+
+  azure-sql-edge:
+    container_name: sqldatabase
+    image: "mcr.microsoft.com/azure-sql-edge:1.0.7"
+    ports:
+      - "1433:1433" # Azure SQL Edge default port
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "HardToGuessPassword1"
+      MSSQL_PID : "Developer"
