@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.SolutionItems", "0.Soluti
 		Directory.Packages.props = Directory.Packages.props
 		global.json = global.json
 		AssemblyInfo.cs = AssemblyInfo.cs
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notifications.Host.Web", "src\Notifications.Host.Web\Notifications.Host.Web.csproj", "{23F57FC0-C89A-4DEE-BF28-8654385A2173}"
