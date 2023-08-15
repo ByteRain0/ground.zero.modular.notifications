@@ -21,12 +21,12 @@ public class RabbitMQReceiver
         _channel = channel;
     }
 
-    public void Listener(IListener service)
+    private void Listener(IListener service)
     {
         _channel.ExchangeDeclare(
             exchange: _rabbitSettings.ExchangeName,
             type: _rabbitSettings.ExchangeType
-            );
+        );
 
         var queueName = _channel.QueueDeclare().QueueName;
 
@@ -38,7 +38,10 @@ public class RabbitMQReceiver
         consumerAsync.Received += async (_, ea) =>
         {
             var body = ea.Body.ToArray();
-            var message = Encoding.UTF8.GetString(body);
+            var message = new Message(
+                header: new Header {Properties = ea.BasicProperties.Headers},
+                serializedObject: Encoding.UTF8.GetString(body));
+
             await service.ProcessMessage(message, ea.RoutingKey);
             _channel.BasicAck(ea.DeliveryTag, false);
         };

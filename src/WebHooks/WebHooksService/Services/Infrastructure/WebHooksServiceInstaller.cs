@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Messaging.RabbitMQ;
 using WebHooks.WebHooksService.Services.Handlers.EventHandlers;
 
 namespace WebHooks.WebHooksService.Services.Infrastructure;

@@ -1,6 +1,5 @@
 using EventProcessor.Service;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Messaging.RabbitMQ;
 
 namespace EventProcessor.Infrastructure;
 

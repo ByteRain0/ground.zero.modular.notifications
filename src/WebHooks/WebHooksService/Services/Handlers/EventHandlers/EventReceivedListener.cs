@@ -23,13 +23,13 @@ public class EventReceivedListener : IListener
         _messageSender = messageSender;
     }
 
-    public async Task ProcessMessage(string message, string routingKey)
+    public async Task ProcessMessage(Message message, string routingKey)
     {
-        var incomingEvent = JsonSerializer.Deserialize<Message>(message);
+        var incomingEvent = JsonSerializer.Deserialize<EventReceived>(message.Body);
 
         if (incomingEvent is null)
         {
-            //TODO: treat exception here
+            //TODO: Treat this issue somehow
         }
 
         //TODO: when implementing repository pass in additional parameters
@@ -37,26 +37,18 @@ public class EventReceivedListener : IListener
 
         foreach (var availableWebHook in availableWebHooks)
         {
-            var @event = new Message
-            {
-                Header = new Header
+            var @event = new Message(
+                header: message.Header,
+                body: new WebHooksEventReceived
                 {
-                    AppCode = incomingEvent!.Header.AppCode,
-                    TenantCode = incomingEvent.Header.TenantCode,
-                    DateTime = incomingEvent.Header.DateTime
-                },
-                Body = new WebHooksEventReceived
-                {
-                    Endpoint = availableWebHook.Endpoint,
-                    Payload = incomingEvent.Body
-                }
-            };
-            _messageSender.PublishMessage(
-                @event,
-                RoutingKeys.WebHooksTopic
-                    .ReplaceAppCodePlaceholderWith(@event.Header.AppCode)
-                    .ReplaceTenantCodePlaceholderWith(@event.Header.TenantCode)
-            );
+                    Payload = incomingEvent!.Payload, Endpoint = availableWebHook.Endpoint
+                });
+
+            var key = RoutingKeys.WebHooksTopic
+                .ReplaceAppCodePlaceholderWith(message.Header.AppCode!)
+                .ReplaceTenantCodePlaceholderWith(message.Header.TenantCode!);
+
+            _messageSender.PublishMessage(@event, key);
         }
     }
 }

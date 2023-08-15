@@ -1,5 +1,4 @@
 using System.Text;
-using System.Text.Json;
 using RabbitMQ.Client;
 
 namespace Shared.Messaging.RabbitMQ;
@@ -14,15 +13,19 @@ public class MessageSender : IMessageSender
         _rabbitSettings = rabbitSettings;
     }
 
-    public void PublishMessage<T>(T entity, string key) where T : class
+    public void PublishMessage(Message message, string key)
     {
-        var message = JsonSerializer.Serialize(entity);
-        //topic should become enum or similar
-        var body = Encoding.UTF8.GetBytes(message);
-        _channel.BasicPublish(exchange: _rabbitSettings.ExchangeName,
+        var properties = _channel.CreateBasicProperties();
+        properties.ContentType = "text/plain";
+        properties.Headers = message.Header.Properties;
+
+        var body = Encoding.UTF8.GetBytes(message.Body);
+        _channel.BasicPublish(
+            exchange: _rabbitSettings.ExchangeName,
             routingKey: key,
-            basicProperties: null,
+            basicProperties: properties,
             body: body);
+
         Console.WriteLine(" [x] Sent '{0}':'{1}'", key, message);
     }
 }

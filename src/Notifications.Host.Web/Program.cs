@@ -30,18 +30,16 @@ app
 
 app.MapGet("/", (IMessageSender messageSender) =>
 {
+    var message = new Message(
+        header: new Header("APPCODE", "SOME_TENANT"),
+        body: new EventReceived {Payload = "An integration event has been received"});
+
     var routingKey = RoutingKeys
         .AppEventsTopic
         .ReplaceAppCodePlaceholderWith("NOTIFICATIONS")
         .ReplaceTenantCodePlaceholderWith("ONE");
 
-    messageSender.PublishMessage(
-        new Message
-        {
-            Header = new Header {AppCode = "NOTIFICATIONS", TenantCode = "ONE", DateTime = DateTimeOffset.UtcNow},
-            Body = "This is a message body"
-        }, routingKey
-    );
+    messageSender.PublishMessage(message, routingKey);
 });
 
 app.Run();

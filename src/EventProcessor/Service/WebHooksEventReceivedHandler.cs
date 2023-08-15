@@ -13,9 +13,9 @@ public class WebHooksEventReceivedHandler : IListener
     }
     public string RoutingKey { get; }
 
-    public Task ProcessMessage(string message, string routingKey)
+    public Task ProcessMessage(Message message, string routingKey)
     {
-        Console.WriteLine("Received event");
+        Console.WriteLine("Event received by processor and sent to client.");
         return Task.CompletedTask;
     }
 }
