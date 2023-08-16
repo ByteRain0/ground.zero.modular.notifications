@@ -32,3 +32,9 @@ services:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "HardToGuessPassword1"
       MSSQL_PID : "Developer"
+
+  notificationsbuild:
+    container_name: webapi
+    image: "webapi2:latest"
+    ports:
+      - "5000:80"
