@@ -9,6 +9,8 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Directory.Packages.props", "."]
 COPY ["Directory.Build.props", "."]
+COPY ["global.json","."]
+COPY ["AssemblyInfo.cs","."]
 COPY ["src/Notifications.Host.Web/Notifications.Host.Web.csproj", "src/Notifications.Host.Web/"]
 COPY ["src/ApplicationRegistry/ApplicationRegistry.csproj", "src/ApplicationRegistry/"]
 COPY ["src/ApplicationRegistry.Contracts/ApplicationRegistry.Contracts.csproj", "src/ApplicationRegistry.Contracts/"]
