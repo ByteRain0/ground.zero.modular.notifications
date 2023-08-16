@@ -32,3 +32,14 @@ services:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "HardToGuessPassword1"
       MSSQL_PID : "Developer"
+
+#docker build -f src/Notifications.Host.Web/Dockerfile -t notificationsapi .
+  api:
+    container_name: api
+    image: "notificationsapi:latest"
+    ports:
+      - "5000:80"
+    depends_on:
+      - rabbitmq
+    environment:
+      - RabbitMQSettings__HOSTNAME=rabbitmq
