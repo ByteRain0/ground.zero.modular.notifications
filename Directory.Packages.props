@@ -4,8 +4,12 @@
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.17.5" />
     <PackageVersion Include="MediatR" Version="12.1.1" />
     <PackageVersion Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="7.0.10" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageVersion Include="RabbitMQ.Client" Version="6.5.0" />
+    <PackageVersion Include="Scrutor.AspNetCore" Version="3.3.0" />
     <PackageVersion Include="xunit.analyzers" Version="1.1.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />

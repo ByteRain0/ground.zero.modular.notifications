@@ -1,10 +1,12 @@
 using ApplicationRegistry.Contracts.Models;
+using ApplicationRegistry.Contracts.Queries;
+using Shared.Pagination;
 
 namespace ApplicationRegistry.Contracts;
 
 public interface IApplicationsRepository
 {
-    Task<List<Application>> GetListAsync(CancellationToken cancellationToken);
+    ValueTask<PagedList<Application>> GetListAsync(GetApplicationListQuery query, CancellationToken cancellationToken);
 
-    Task<Application?> GetByCodeAsync(string code, CancellationToken cancellationToken);
+    ValueTask<Application?> GetByCodeAsync(string code, CancellationToken cancellationToken);
 }

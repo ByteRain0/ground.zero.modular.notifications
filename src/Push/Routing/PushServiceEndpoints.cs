@@ -18,8 +18,8 @@ internal class PushServiceEndpoints : IEndpointsDefinition
 
             var routingKey = RoutingKeys
                 .AppEventsTopic
-                .ReplaceAppCodePlaceholderWith("NOTIFICATIONS")
-                .ReplaceTenantCodePlaceholderWith("ONE");
+                .ReplaceAppCodePlaceholderWith("APPCODE")
+                .ReplaceTenantCodePlaceholderWith("SOME_TENANT");
 
             messageSender.PublishMessage(message, routingKey);
         });

@@ -1,4 +1,4 @@
-using Shared.Messaging.RabbitMQ;
+namespace Shared.Messaging.RabbitMQ;
 
 public interface IListener
 {
