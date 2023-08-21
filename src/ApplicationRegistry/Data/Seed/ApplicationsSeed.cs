@@ -13,22 +13,24 @@ public static class ApplicationsSeed
                 new()
                 {
                     Code = "NOTIFICATIONS",
-                    Name = "Notifications System",
-                    Events = new List<EventDataModel>
-                    {
-                        new()
-                        {
-                            Code = "NOTIFICATIONS_WEBHOOK_CREATED",
-                            Name = "WebbHook Created",
-                            ApplicationCode = "NOTIFICATIONS"
-                        },
-                        new()
-                        {
-                            Code = "NOTIFICATIONS_WEBHOOK_REMOVED",
-                            Name = "WebbHook Removed",
-                            ApplicationCode = "NOTIFICATIONS"
-                        }
-                    }
+                    Name = "Notifications System"
+                }
+            });
+
+        modelBuilder.Entity<EventDataModel>()
+            .HasData(new List<EventDataModel>()
+            {
+                new()
+                {
+                    Code = "NOTIFICATIONS_WEBHOOK_CREATED",
+                    Name = "WebbHook Created",
+                    ApplicationCode = "NOTIFICATIONS"
+                },
+                new()
+                {
+                    Code = "NOTIFICATIONS_WEBHOOK_REMOVED",
+                    Name = "WebbHook Removed",
+                    ApplicationCode = "NOTIFICATIONS"
                 }
             });
     }

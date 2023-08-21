@@ -2,6 +2,7 @@ using ApplicationRegistry.Infrastructure;
 using EventProcessor.Infrastructure;
 using Push.Routing;
 using Push.Service.Infrastructure;
+using Shared.Cache;
 using Shared.Messaging.RabbitMQ;
 using Shared.TokenService;
 using WebHooks.WebHooksRepository.Services.Infrastructure;
@@ -10,8 +11,7 @@ using WebHooks.WebHooksService.Services.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Register modules
-
+// Register components
 builder.Services
     .AddWebHooksService()
     .AddWebHooksRepository()
@@ -20,7 +20,8 @@ builder.Services
     .AddHostedService<WorkerService>()
     .AddEventsProcessor()
     .AddRabbitMQ(builder.Configuration)
-    .AddTokenAccessor();
+    .AddTokenAccessor()
+    .AddCacheService(builder.Configuration);
 
 var app = builder.Build();
 

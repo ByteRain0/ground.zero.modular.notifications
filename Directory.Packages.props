@@ -6,7 +6,7 @@
     <PackageVersion Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="7.0.10" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageVersion Include="RabbitMQ.Client" Version="6.5.0" />
     <PackageVersion Include="Scrutor.AspNetCore" Version="3.3.0" />
@@ -28,11 +28,14 @@
     <PackageVersion Include="Meziantou.Analyzer" Version="2.0.56" />
     <PackageVersion Include="SecurityCodeScan.VS2019" Version="5.6.7" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
-    <PackageVersion Include="FluentValidation" Version="11.5.1" />
+    <PackageVersion Include="FluentValidation" Version="11.7.1" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
     <PackageVersion Include="O9d.AspNet.FluentValidation" Version="0.1.1" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -51,5 +54,6 @@
     <PackageVersion Include="Refit" Version="7.0.0-beta.1" />
     <PackageVersion Include="Refit.HttpClientFactory" Version="7.0.0-beta.1" />
     <PackageVersion Include="Refit.Newtonsoft.Json" Version="7.0.0-beta.1" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.6.122" />
   </ItemGroup>
 </Project>

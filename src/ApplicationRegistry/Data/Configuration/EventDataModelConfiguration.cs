@@ -8,6 +8,8 @@ public class EventDataModelConfiguration : IEntityTypeConfiguration<EventDataMod
 {
     public void Configure(EntityTypeBuilder<EventDataModel> builder)
     {
+        builder.HasKey(x => new {x.Code, x.ApplicationCode});
+
         builder.Property(x => x.Code)
             .IsRequired();
 

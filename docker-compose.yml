@@ -23,12 +23,17 @@ services:
     ports:
       - "27017:27017" # MongoDB default port
 
-  azure-sql-edge:
-    container_name: sqldatabase
-    image: "mcr.microsoft.com/azure-sql-edge:1.0.7"
-    ports:
-      - "1433:1433" # Azure SQL Edge default port
+  postgres:
+    image: postgres:latest
+    container_name: database
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "HardToGuessPassword1"
-      MSSQL_PID : "Developer"
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

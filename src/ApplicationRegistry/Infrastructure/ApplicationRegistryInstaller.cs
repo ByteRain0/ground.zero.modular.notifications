@@ -17,9 +17,8 @@ public static class ApplicationRegistryInstaller
             opts.UseNpgsql(configuration.GetConnectionString("Default")));
 
         services
-            .Decorate<IApplicationsRepository, ApplicationRepositoryLoggingDecorator>()
-            .Decorate<IApplicationsRepository, ApplicationRepositoryCacheDecorator>()
-            .AddScoped<IApplicationsRepository, ApplicationRepository>();
+            .AddScoped<IApplicationsRepository, ApplicationRepository>()
+            .Decorate<IApplicationsRepository, ApplicationRepositoryCacheDecorator>();
 
         return services;
     }
