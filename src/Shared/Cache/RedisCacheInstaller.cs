@@ -18,6 +18,8 @@ public static class RedisCacheInstaller
             return ConnectionMultiplexer.Connect(connectionString);
         });
 
+        services.AddScoped<ICacheService, RedisCacheService>();
+
         return services;
     }
 }

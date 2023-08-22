@@ -4,6 +4,7 @@ using Push.Routing;
 using Push.Service.Infrastructure;
 using Shared.Cache;
 using Shared.Messaging.RabbitMQ;
+using Shared.Swagger;
 using Shared.TokenService;
 using WebHooks.WebHooksRepository.Services.Infrastructure;
 using WebHooks.WebHooksService.Routing;
@@ -13,15 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Register components
 builder.Services
+    .AddCacheService(builder.Configuration)
+    .AddRabbitMQ(builder.Configuration)
+    .AddTokenAccessor()
+    .AddSwagger()
     .AddWebHooksService()
     .AddWebHooksRepository()
     .AddApplicationRegistryService(builder.Configuration)
     .AddPushService()
     .AddHostedService<WorkerService>()
-    .AddEventsProcessor()
-    .AddRabbitMQ(builder.Configuration)
-    .AddTokenAccessor()
-    .AddCacheService(builder.Configuration);
+    .AddEventsProcessor();
 
 var app = builder.Build();
 
@@ -31,6 +33,8 @@ app.ApplyApplicationModuleMigrations();
 // Register available endpoints
 app
     .UseWebHooksServiceEndpoints()
-    .UsePushServiceEndpoints();
+    .UsePushServiceEndpoints()
+    .UseAppRegistryEndpoints()
+    .UseSwaggerRoutes();
 
 app.Run();

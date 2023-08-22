@@ -10,7 +10,7 @@ internal class PushServiceEndpoints : IEndpointsDefinition
 {
     public static void ConfigureEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet("/", (IMessageSender messageSender) =>
+        app.MapGet("api/v1/test", (IMessageSender messageSender) =>
         {
             var message = new Message(
                 header: new Header("APPCODE", "SOME_TENANT"),

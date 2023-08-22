@@ -1,11 +1,13 @@
 using ApplicationRegistry.Contracts;
 using ApplicationRegistry.CrossCutting;
 using ApplicationRegistry.Data;
+using ApplicationRegistry.Routing;
 using ApplicationRegistry.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Routing;
 
 namespace ApplicationRegistry.Infrastructure;
 
@@ -28,5 +30,12 @@ public static class ApplicationRegistryInstaller
         using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
         using var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
         context?.Database.Migrate();
+    }
+
+    public static IApplicationBuilder UseAppRegistryEndpoints(this IApplicationBuilder app)
+    {
+        app.UseEndpoints<ApplicationsEndpoints>();
+
+        return app;
     }
 }

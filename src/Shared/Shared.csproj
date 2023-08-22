@@ -3,8 +3,12 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="O9d.AspNet.FluentValidation" />
     <PackageReference Include="RabbitMQ.Client" />
     <PackageReference Include="StackExchange.Redis" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
   </ItemGroup>
 </Project>
