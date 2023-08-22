@@ -1,4 +1,4 @@
-namespace Shared.Cache;
+namespace Shared.Cache.Distributed;
 
 public interface ICacheService
 {

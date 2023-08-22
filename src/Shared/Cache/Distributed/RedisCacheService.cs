@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Shared.Constants;
 using StackExchange.Redis;
 
-namespace Shared.Cache;
+namespace Shared.Cache.Distributed;
 
 public class RedisCacheService : ICacheService
 {

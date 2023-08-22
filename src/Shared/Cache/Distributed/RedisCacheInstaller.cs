@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace Shared.Cache;
+namespace Shared.Cache.Distributed;
 
 public static class RedisCacheInstaller
 {

@@ -1,7 +1,7 @@
 using ApplicationRegistry.Contracts;
 using ApplicationRegistry.Contracts.Models;
 using ApplicationRegistry.Contracts.Queries;
-using Shared.Cache;
+using Shared.Cache.Distributed;
 using Shared.Pagination;
 
 namespace ApplicationRegistry.CrossCutting;

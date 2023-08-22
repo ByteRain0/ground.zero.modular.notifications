@@ -4,7 +4,9 @@ using ApplicationRegistry.Contracts.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using Shared.Pagination;
 using Shared.Routing;
 using Shared.Sorting;
@@ -23,7 +25,8 @@ public class ApplicationsEndpoints : IEndpointsDefinition
         group.MapGet("/", GetApplications)
             .Produces<PagedList<Application>>(200)
             .ProducesValidationProblem()
-            .WithName("GetApplications");
+            .WithName("GetApplications")
+            .CacheOutput("GetApplications");
 
         group.MapGet("/{code}", GetApplicationByCode)
             .Accepts<GetApplicationListQuery>(ContentTypes.ApplicationJson)
@@ -31,6 +34,9 @@ public class ApplicationsEndpoints : IEndpointsDefinition
             .Produces(404)
             .ProducesValidationProblem()
             .WithName("GetApplicationByCode");
+
+        group.MapGet("/invalidate", InvalidateMoviesCache)
+            .WithName("InvalidateCache");
     }
 
     public static async Task<IResult> GetApplicationByCode(
@@ -58,12 +64,18 @@ public class ApplicationsEndpoints : IEndpointsDefinition
     {
         var query = new GetApplicationListQuery
         {
-            SortColumn = sortColumn,
-            SortOrder = sortOrder,
-            Page = page,
-            PageSize = pageSize
+            SortColumn = sortColumn, SortOrder = sortOrder, Page = page, PageSize = pageSize
         };
         var applications = await repository.GetListAsync(query, cancellationToken);
         return Results.Ok(applications);
+    }
+
+    public static async Task<IResult> InvalidateMoviesCache(
+        IOutputCacheStore cacheStore,
+        CancellationToken cancellationToken)
+    {
+        await cacheStore.EvictByTagAsync("movies", cancellationToken);
+
+        return Results.Ok();
     }
 }
