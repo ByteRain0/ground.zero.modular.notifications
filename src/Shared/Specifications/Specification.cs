@@ -11,7 +11,6 @@ public abstract class Specification<T> where T : class
 
     public Expression<Func<T, bool>> Criteria { get; }
 
-    //TODO: mention my issue with the Include/ThenInclude.
     public List<Expression<Func<T, object>>> Include { get; } = new();
 
     public Expression<Func<T, object>>? OrderBy { get; private set; }

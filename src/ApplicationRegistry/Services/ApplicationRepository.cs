@@ -22,7 +22,9 @@ internal class ApplicationRepository : IApplicationsRepository
         _context = context;
     }
 
-    public async ValueTask<Application?> GetByCodeAsync(string code, CancellationToken cancellationToken)
+    public async ValueTask<Application?> GetByCodeAsync(
+        string code,
+        CancellationToken cancellationToken)
     {
         var application = await SpecificationQueryBuilder
             .BuildQuery(
@@ -33,7 +35,8 @@ internal class ApplicationRepository : IApplicationsRepository
         return application?.ToContract();
     }
 
-    public async ValueTask<PagedList<Application>> GetListAsync(GetApplicationListQuery query,
+    public async ValueTask<PagedList<Application>> GetListAsync(
+        GetApplicationListQuery query,
         CancellationToken cancellationToken)
     {
         var dbQuery = _context
@@ -56,10 +59,12 @@ internal class ApplicationRepository : IApplicationsRepository
         return await PagedListExtensions<Application>.CreateAsync(
             source: dbQuery.Select(x => x.ToContract()),
             page: query.Page,
-            pageSize: query.PageSize);
+            pageSize: query.PageSize,
+            cancellationToken: cancellationToken);
     }
 
-    private static Expression<Func<ApplicationDataModel, object>> GetApplicationSortColumn(GetApplicationListQuery query)
+    private static Expression<Func<ApplicationDataModel, object>> GetApplicationSortColumn(
+        GetApplicationListQuery query)
     {
         return query.SortColumn?.ToLowerInvariant() switch
         {

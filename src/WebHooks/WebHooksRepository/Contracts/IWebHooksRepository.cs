@@ -6,5 +6,5 @@ public interface IWebHooksRepository
 
     Task<bool> DeleteAsync(string id);
 
-    Task<List<WebHook>> GetListAsync(CancellationToken cancellationToken);
+    Task<List<WebHook>> GetListAsync(GetListAsyncQuery query, CancellationToken cancellationToken);
 }

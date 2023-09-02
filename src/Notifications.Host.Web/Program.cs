@@ -22,7 +22,7 @@ builder.Services
     .AddTokenAccessor()
     .AddSwagger()
     .AddWebHooksService()
-    .AddWebHooksRepository()
+    .AddWebHooksRepository(builder.Configuration)
     .AddApplicationRegistryService(builder.Configuration)
     .AddPushService()
     .AddHostedService<WorkerService>()

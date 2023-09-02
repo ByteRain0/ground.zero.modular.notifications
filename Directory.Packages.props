@@ -8,6 +8,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="7.0.10" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="MongoDB.Driver" Version="2.21.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageVersion Include="RabbitMQ.Client" Version="6.5.0" />
     <PackageVersion Include="Scrutor.AspNetCore" Version="3.3.0" />

@@ -16,9 +16,7 @@ internal class GetWebHooksQueryHandler : IRequestHandler<GetWebHooksQuery, List<
 
     public async Task<List<WebHookDto>> Handle(GetWebHooksQuery request, CancellationToken cancellationToken)
     {
-        //TODO: pass in a specification here for filtering.
-        var webHooksList = await _webHooksRepository.GetListAsync(cancellationToken);
-        //TODO: return a list with remapping it to the DTOs
+        var webHooksList = await _webHooksRepository.GetListAsync(new GetListAsyncQuery(),cancellationToken);
         return webHooksList.Select(_ => new WebHookDto()).ToList();
     }
 }

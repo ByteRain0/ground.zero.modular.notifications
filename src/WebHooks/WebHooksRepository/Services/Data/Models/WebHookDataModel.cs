@@ -1,10 +1,15 @@
-namespace WebHooks.WebHooksRepository.Services;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace WebHooks.WebHooksRepository.Services.Data.Models;
 
 public class WebHookDataModel
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
     public Guid Id { get; set; }
 
-    public Uri Endpoint { get; set; }
+    public string Endpoint { get; set; }
 
     public string ClientCode { get; set; }
 

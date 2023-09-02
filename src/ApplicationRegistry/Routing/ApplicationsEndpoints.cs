@@ -19,8 +19,7 @@ public class ApplicationsEndpoints : IEndpointsDefinition
     {
         var group = app.MapGroup("api/v1/applications")
             .WithTags("Applications")
-            .WithOpenApi()
-            .WithValidationFilter();
+            .WithOpenApi();
 
         group.MapGet("/", GetApplications)
             .Produces<PagedList<Application>>(200)

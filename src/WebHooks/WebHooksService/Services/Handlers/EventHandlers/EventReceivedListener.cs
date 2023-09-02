@@ -33,7 +33,8 @@ public class EventReceivedListener : IListener
         }
 
         //TODO: when implementing repository pass in additional parameters
-        var availableWebHooks = await _repository.GetListAsync(CancellationToken.None);
+        var availableWebHooks = await _repository
+            .GetListAsync(new GetListAsyncQuery(), CancellationToken.None);
 
         foreach (var availableWebHook in availableWebHooks)
         {

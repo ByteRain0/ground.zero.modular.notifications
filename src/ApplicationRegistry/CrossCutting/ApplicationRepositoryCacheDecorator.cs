@@ -17,13 +17,16 @@ public class ApplicationRepositoryCacheDecorator : IApplicationsRepository
         _cacheService = cacheService;
     }
 
-    public ValueTask<PagedList<Application>> GetListAsync(GetApplicationListQuery query,
+    public ValueTask<PagedList<Application>> GetListAsync(
+        GetApplicationListQuery query,
         CancellationToken cancellationToken)
     {
         return _next.GetListAsync(query, cancellationToken);
     }
 
-    public async ValueTask<Application?> GetByCodeAsync(string code, CancellationToken cancellationToken)
+    public async ValueTask<Application?> GetByCodeAsync(
+        string code,
+        CancellationToken cancellationToken)
     {
         var cacheKey = $"application_{code}";
         var cachedApplication = await _cacheService.GetValueAsync<Application>(cacheKey);
