@@ -5,7 +5,7 @@ namespace WebHooks.WebHooksRepository.Contracts;
 /// </summary>
 public class WebHook
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 
     public Uri Endpoint { get; set; }
 

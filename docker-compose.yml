@@ -20,6 +20,10 @@ services:
   mongodb:
     container_name: mongodatabase
     image: "mongo:latest"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password123
+    restart: unless-stopped
     ports:
       - "27017:27017" # MongoDB default port
 

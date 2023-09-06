@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using WebHooks.WebHooksRepository.Contracts;
 using WebHooks.WebHooksRepository.Services.Data.Mappings;
@@ -12,14 +11,11 @@ public class WebHooksRepository : IWebHooksRepository
 {
     private readonly IMongoCollection<WebHookDataModel> _context;
 
-    public WebHooksRepository(IOptionsSnapshot<MongoDbSettings> mongoDbSettings)
+    public WebHooksRepository(IOptions<MongoDbSettings> mongoDbSettings)
     {
-        var mongoClient = new MongoClient(
-            mongoDbSettings.Value.ConnectionString);
-        var mongoDatabase = mongoClient.GetDatabase(
-            mongoDbSettings.Value.DatabaseName);
-        _context = mongoDatabase.GetCollection<WebHookDataModel>(
-            mongoDbSettings.Value.WebHooksCollectionName);
+        var mongoClient = new MongoClient(mongoDbSettings.Value.ConnectionString);
+        var mongoDatabase = mongoClient.GetDatabase(mongoDbSettings.Value.DatabaseName);
+        _context = mongoDatabase.GetCollection<WebHookDataModel>(mongoDbSettings.Value.WebHooksCollectionName);
     }
 
     public async Task<bool> DeleteAsync(string id)
@@ -31,9 +27,9 @@ public class WebHooksRepository : IWebHooksRepository
     public async Task<List<WebHook>> GetListAsync(GetListAsyncQuery query, CancellationToken cancellationToken)
     {
         var list = await _context
-            .Find(x =>
-                x.EventCode.ToLowerInvariant() == query.EventCode.ToLowerInvariant())
+            .Find(x => x.EventCode.ToLowerInvariant() == query.EventCode.ToLowerInvariant())
             .ToListAsync(cancellationToken);
+
         return list.Select(x => x.ToContract()).ToList();
     }
 
