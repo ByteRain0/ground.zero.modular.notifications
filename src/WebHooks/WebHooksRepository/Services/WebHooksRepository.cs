@@ -15,6 +15,7 @@ public class WebHooksRepository : IWebHooksRepository
     {
         var mongoClient = new MongoClient(mongoDbSettings.Value.ConnectionString);
         var mongoDatabase = mongoClient.GetDatabase(mongoDbSettings.Value.DatabaseName);
+        EnsureCollectionExists(mongoDatabase, mongoDbSettings.Value.WebHooksCollectionName);
         _context = mongoDatabase.GetCollection<WebHookDataModel>(mongoDbSettings.Value.WebHooksCollectionName);
     }
 
@@ -37,5 +38,14 @@ public class WebHooksRepository : IWebHooksRepository
     {
         await _context.InsertOneAsync(webHook.ToDataModel());
         return true;
+    }
+
+    private static void EnsureCollectionExists(IMongoDatabase database, string dbCollectionName)
+    {
+        var collectionExists = database.ListCollectionNames().ToList().Any(name => name == dbCollectionName);
+        if (!collectionExists)
+        {
+            database.CreateCollection(dbCollectionName);
+        }
     }
 }
