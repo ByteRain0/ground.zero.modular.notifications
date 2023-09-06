@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
+using MvcJsonOptions = Microsoft.AspNetCore.Mvc.JsonOptions;
 
 namespace Shared.Swagger;
 
@@ -8,6 +11,9 @@ public static class SwaggerInstaller
 {
     public static IServiceCollection AddSwagger(this IServiceCollection services)
     {
+        services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+        services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(config =>
         {

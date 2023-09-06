@@ -17,7 +17,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddCacheService(builder.Configuration)
     .AddConfiguredOutputCache()
-    //.AddResponseCaching()
     .AddRabbitMQ(builder.Configuration)
     .AddTokenAccessor()
     .AddSwagger()
@@ -34,7 +33,6 @@ var app = builder.Build();
 app.ApplyApplicationModuleMigrations();
 
 // Since middleware is sequential if you are using cors use it before response caching.
-//app.UseResponseCaching();
 app.UseOutputCache();
 
 // Register available endpoints

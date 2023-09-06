@@ -34,7 +34,7 @@ public class ApplicationsEndpoints : IEndpointsDefinition
             .ProducesValidationProblem()
             .WithName("GetApplicationByCode");
 
-        group.MapGet("/invalidate", InvalidateMoviesCache)
+        group.MapGet("/invalidate", InvalidateApplicationsCache)
             .WithName("InvalidateCache");
     }
 
@@ -63,18 +63,20 @@ public class ApplicationsEndpoints : IEndpointsDefinition
     {
         var query = new GetApplicationListQuery
         {
-            SortColumn = sortColumn, SortOrder = sortOrder, Page = page, PageSize = pageSize
+            SortColumn = sortColumn,
+            SortOrder = sortOrder,
+            Page = page,
+            PageSize = pageSize
         };
         var applications = await repository.GetListAsync(query, cancellationToken);
         return Results.Ok(applications);
     }
 
-    public static async Task<IResult> InvalidateMoviesCache(
+    public static async Task<IResult> InvalidateApplicationsCache(
         IOutputCacheStore cacheStore,
         CancellationToken cancellationToken)
     {
-        await cacheStore.EvictByTagAsync("movies", cancellationToken);
-
+        await cacheStore.EvictByTagAsync("getapplications", cancellationToken);
         return Results.Ok();
     }
 }
