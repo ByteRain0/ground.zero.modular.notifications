@@ -1,9 +1,15 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Linq.Expressions;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Shared.Pagination;
+using Shared.Sorting;
+using Shared.Specifications;
 using WebHooks.WebHooksRepository.Contracts;
 using WebHooks.WebHooksRepository.Services.Data.Mappings;
 using WebHooks.WebHooksRepository.Services.Data.Models;
 using WebHooks.WebHooksRepository.Services.Data.Settings;
+using WebHooks.WebHooksRepository.Services.Data.Specifications;
+using MongoDB.Driver.Linq;
 
 namespace WebHooks.WebHooksRepository.Services;
 
@@ -25,13 +31,43 @@ public class WebHooksRepository : IWebHooksRepository
         return deleteResult.IsAcknowledged;
     }
 
-    public async Task<List<WebHook>> GetListAsync(GetListAsyncQuery query, CancellationToken cancellationToken)
+    public async Task<WebHook> GetAsync(string id, CancellationToken cancellationToken)
     {
-        var list = await _context
-            .Find(x => x.EventCode.ToLowerInvariant() == query.EventCode.ToLowerInvariant())
-            .ToListAsync(cancellationToken);
+        var webHook = await _context
+            .Find(x => x.Id == id)
+            .FirstOrDefaultAsync(cancellationToken);
 
-        return list.Select(x => x.ToContract()).ToList();
+        // Don't forget to mention the AsContract issue we have in the online advices.
+        return webHook.ToContract();
+    }
+
+    public async Task<PagedList<WebHook>> GetListAsync(GetListAsyncQuery query, CancellationToken cancellationToken)
+    {
+        var mongoDbQuery = _context
+            .AsQueryable()
+            .BuildSpecificationQuery(new WebHooksForTenantSpecification(query.TennantCode))
+            .BuildSpecificationQuery(new WebHooksForEventWithCodeSpecification(query.TennantCode));
+
+        if (query.SortOrder is not null)
+        {
+            if (query.SortOrder == SortOrder.Ascending)
+            {
+                mongoDbQuery.OrderBy(GetWebHooksSortColumn(query));
+            }
+            else
+            {
+                mongoDbQuery.OrderByDescending(GetWebHooksSortColumn(query));
+            }
+        }
+
+        var totalCount = mongoDbQuery.Count();
+
+        var list = await mongoDbQuery
+            .Skip(query.PageSize * query.Page)
+            .Take(query.PageSize)
+            .ToListAsync(cancellationToken:cancellationToken);
+
+        return new PagedList<WebHook>(list.Select(x => x.ToContract()).ToList(), query.Page, query.PageSize, totalCount);
     }
 
     public async Task<bool> SaveAsync(WebHook webHook)
@@ -48,4 +84,16 @@ public class WebHooksRepository : IWebHooksRepository
             database.CreateCollection(dbCollectionName);
         }
     }
-}
+
+    private static Expression<Func<WebHookDataModel, object>> GetWebHooksSortColumn(
+        GetListAsyncQuery query)
+    {
+        return query.SortColumn?.ToLowerInvariant() switch
+        {
+            "eventcode" => webhook => webhook.EventCode,
+            "tenantcode" => webhook => webhook.TenantCode,
+            "clientcode" => webhook => webhook.ClientCode,
+            "sourcecode" => webhook => webhook.SourceCode,
+            _ => application => application.EventCode
+        };
+    }}

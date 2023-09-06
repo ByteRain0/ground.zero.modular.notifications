@@ -10,7 +10,7 @@ public static class RedisCacheInstaller
     {
         services.AddSingleton<IConnectionMultiplexer>(_ =>
         {
-            var connectionString = configuration.GetConnectionString("Redis");
+            var connectionString = configuration["Redis:ConnectionString"];
             if (string.IsNullOrEmpty(connectionString))
             {
                 throw new InvalidOperationException("Redis connection string not specified");

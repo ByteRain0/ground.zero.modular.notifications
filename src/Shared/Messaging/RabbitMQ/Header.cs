@@ -9,19 +9,23 @@ public record Header
         Properties = new Dictionary<string, object>();
     }
 
-    public Header(string applicationCode, string tenantCode)
+    public Header(string sourceCode, string tenantCode, string eventCode)
     {
         Properties = new Dictionary<string, object>
         {
-            {HeaderConstants.AppCode, applicationCode}, {HeaderConstants.TenantCode, tenantCode}
+            {HeaderConstants.SourceCode, sourceCode},
+            {HeaderConstants.TenantCode, tenantCode},
+            {HeaderConstants.EventCode, eventCode}
         };
     }
 
     public IDictionary<string, object>? Properties { get; set; }
 
-    public string AppCode => RetrieveStringHeader(HeaderConstants.AppCode);
+    public string SourceCode => RetrieveStringHeader(HeaderConstants.SourceCode);
 
     public string TenantCode => RetrieveStringHeader(HeaderConstants.TenantCode);
+
+    public string EventCode => RetrieveStringHeader(HeaderConstants.EventCode);
 
     private string RetrieveStringHeader(string key)
     {

@@ -29,7 +29,7 @@ public class ApplicationsEndpoints : IEndpointsDefinition
 
         group.MapGet("/{code}", GetApplicationByCode)
             .Accepts<GetApplicationListQuery>(ContentTypes.ApplicationJson)
-            .Produces<PagedList<Application>>(200)
+            .Produces<Application>(200)
             .Produces(404)
             .ProducesValidationProblem()
             .WithName("GetApplicationByCode");

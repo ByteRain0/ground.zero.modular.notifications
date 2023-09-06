@@ -27,7 +27,7 @@ internal class ApplicationRepository : IApplicationsRepository
         CancellationToken cancellationToken)
     {
         var application = await SpecificationQueryBuilder
-            .BuildQuery(
+            .BuildSpecificationQuery(
                 source: _context.Applications,
                 specification: new ApplicationWithEventsByCodeSpecification(code))
             .FirstOrDefaultAsync(cancellationToken);

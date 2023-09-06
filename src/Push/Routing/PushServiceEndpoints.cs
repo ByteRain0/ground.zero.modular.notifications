@@ -13,7 +13,7 @@ internal class PushServiceEndpoints : IEndpointsDefinition
         app.MapGet("api/v1/test", (IMessageSender messageSender) =>
         {
             var message = new Message(
-                header: new Header("APPCODE", "SOME_TENANT"),
+                header: new Header("APPCODE", "SOME_TENANT", "DEFAULT_EVENT"),
                 body: new EventReceived {Payload = "An integration event has been received"});
 
             var routingKey = RoutingKeys

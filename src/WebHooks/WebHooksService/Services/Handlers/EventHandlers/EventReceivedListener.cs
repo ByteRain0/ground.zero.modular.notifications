@@ -32,21 +32,29 @@ public class EventReceivedListener : IListener
             //TODO: Treat this issue somehow
         }
 
-        //TODO: when implementing repository pass in additional parameters
         var availableWebHooks = await _repository
-            .GetListAsync(new GetListAsyncQuery(), CancellationToken.None);
+            .GetListAsync(
+                new GetListAsyncQuery
+                {
+                    PageSize = int.MaxValue,
+                    Page = 0,
+                    TennantCode = message.Header.TenantCode,
+                    EventCode = message.Header.EventCode,
+                    SourceCode = message.Header.SourceCode
+                }, CancellationToken.None);
 
-        foreach (var availableWebHook in availableWebHooks)
+        foreach (var availableWebHook in availableWebHooks.Items)
         {
             var @event = new Message(
                 header: message.Header,
                 body: new WebHooksEventReceived
                 {
-                    Payload = incomingEvent!.Payload, Endpoint = availableWebHook.Endpoint
+                    Payload = incomingEvent!.Payload,
+                    Endpoint = availableWebHook.Endpoint
                 });
 
             var key = RoutingKeys.WebHooksTopic
-                .ReplaceAppCodePlaceholderWith(message.Header.AppCode!)
+                .ReplaceAppCodePlaceholderWith(message.Header.SourceCode!)
                 .ReplaceTenantCodePlaceholderWith(message.Header.TenantCode!);
 
             _messageSender.PublishMessage(@event, key);
