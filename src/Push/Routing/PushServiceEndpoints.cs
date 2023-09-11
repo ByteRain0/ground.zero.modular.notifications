@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Shared.Messaging.IntegrationEvents;
 using Shared.Messaging.RabbitMQ;
@@ -22,6 +23,8 @@ internal class PushServiceEndpoints : IEndpointsDefinition
                 .ReplaceTenantCodePlaceholderWith("SOME_TENANT");
 
             messageSender.PublishMessage(message, routingKey);
-        });
+        })
+            .WithTags("PushEvents")
+            .WithName("TestIntegrationEvent");
     }
 }

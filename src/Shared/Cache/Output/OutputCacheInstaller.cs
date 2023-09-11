@@ -8,7 +8,7 @@ public static class OutputCacheInstaller
     {
         services.AddOutputCache(opts =>
         {
-            opts.AddBasePolicy(policy => policy.Cache());
+            opts.AddBasePolicy(policy => policy.NoCache());
             opts.AddPolicy("GetApplications", policy =>
             {
                 policy.Cache()

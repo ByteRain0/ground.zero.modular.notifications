@@ -45,8 +45,9 @@ public class WebHooksRepository : IWebHooksRepository
     {
         var mongoDbQuery = _context
             .AsQueryable()
+            .BuildSpecificationQuery(new WebHooksForApplicationWithCodeSpecification(query.SourceCode))
             .BuildSpecificationQuery(new WebHooksForTenantSpecification(query.TennantCode))
-            .BuildSpecificationQuery(new WebHooksForEventWithCodeSpecification(query.TennantCode));
+            .BuildSpecificationQuery(new WebHooksForEventWithCodeSpecification(query.EventCode));
 
         if (query.SortOrder is not null)
         {
