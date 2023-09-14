@@ -30,7 +30,9 @@ builder.Services
 var app = builder.Build();
 
 // Set up custom setting for your modules
-app.ApplyApplicationModuleMigrations();
+app
+    .ApplyApplicationModuleMigrations()
+    .ApplyWebHooksMigrations();
 
 // Since middleware is sequential if you are using cors use it before response caching.
 app.UseOutputCache();

@@ -25,11 +25,13 @@ public static class ApplicationRegistryInstaller
         return services;
     }
 
-    public static void ApplyApplicationModuleMigrations(this IApplicationBuilder app)
+    public static IApplicationBuilder ApplyApplicationModuleMigrations(this IApplicationBuilder app)
     {
         using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
         using var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
         context?.Database.Migrate();
+
+        return app;
     }
 
     public static IApplicationBuilder UseAppRegistryEndpoints(this IApplicationBuilder app)

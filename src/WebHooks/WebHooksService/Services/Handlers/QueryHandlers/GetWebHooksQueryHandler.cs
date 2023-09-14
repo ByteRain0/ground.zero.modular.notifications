@@ -26,7 +26,7 @@ internal class GetWebHooksQueryHandler : IRequestHandler<GetWebHooksQuery, Paged
             SortOrder = request.SortOrder,
             EventCode = request.EventCode,
             SourceCode = request.SourceCode,
-            TennantCode = request.TennantCode,
+            TenantCode = request.TennantCode,
         }, cancellationToken);
 
         return new PagedList<WebHookDto>(

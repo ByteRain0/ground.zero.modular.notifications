@@ -7,7 +7,7 @@ public record GetListAsyncQuery : IPagedQuery, ISortedQuery
 {
     public string EventCode { get; init; }
 
-    public string TennantCode { get; set; }
+    public string TenantCode { get; set; }
 
     public string SourceCode { get; set; }
 

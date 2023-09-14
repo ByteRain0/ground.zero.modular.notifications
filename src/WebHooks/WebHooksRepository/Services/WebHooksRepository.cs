@@ -21,7 +21,6 @@ public class WebHooksRepository : IWebHooksRepository
     {
         var mongoClient = new MongoClient(mongoDbSettings.Value.ConnectionString);
         var mongoDatabase = mongoClient.GetDatabase(mongoDbSettings.Value.DatabaseName);
-        EnsureCollectionExists(mongoDatabase, mongoDbSettings.Value.WebHooksCollectionName);
         _context = mongoDatabase.GetCollection<WebHookDataModel>(mongoDbSettings.Value.WebHooksCollectionName);
     }
 
@@ -46,7 +45,7 @@ public class WebHooksRepository : IWebHooksRepository
         var mongoDbQuery = _context
             .AsQueryable()
             .BuildSpecificationQuery(new WebHooksForApplicationWithCodeSpecification(query.SourceCode))
-            .BuildSpecificationQuery(new WebHooksForTenantSpecification(query.TennantCode))
+            .BuildSpecificationQuery(new WebHooksForTenantSpecification(query.TenantCode))
             .BuildSpecificationQuery(new WebHooksForEventWithCodeSpecification(query.EventCode));
 
         if (query.SortOrder is not null)
@@ -73,17 +72,19 @@ public class WebHooksRepository : IWebHooksRepository
 
     public async Task<bool> SaveAsync(WebHook webHook)
     {
+        var mongoDbQuery = _context
+            .AsQueryable()
+            .BuildSpecificationQuery(new WebHooksForApplicationWithCodeSpecification(webHook.SourceCode))
+            .BuildSpecificationQuery(new WebHooksForTenantSpecification(webHook.TenantCode))
+            .BuildSpecificationQuery(new WebHooksForEventWithCodeSpecification(webHook.EventCode));
+
+        if (await mongoDbQuery.AnyAsync())
+        {
+            return true;
+        }
+
         await _context.InsertOneAsync(webHook.ToDataModel());
         return true;
-    }
-
-    private static void EnsureCollectionExists(IMongoDatabase database, string dbCollectionName)
-    {
-        var collectionExists = database.ListCollectionNames().ToList().Any(name => name == dbCollectionName);
-        if (!collectionExists)
-        {
-            database.CreateCollection(dbCollectionName);
-        }
     }
 
     private static Expression<Func<WebHookDataModel, object>> GetWebHooksSortColumn(

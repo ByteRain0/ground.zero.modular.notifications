@@ -38,7 +38,7 @@ public class EventReceivedListener : IListener
                 {
                     PageSize = int.MaxValue,
                     Page = 0,
-                    TennantCode = message.Header.TenantCode,
+                    TenantCode = message.Header.TenantCode,
                     EventCode = message.Header.EventCode,
                     SourceCode = message.Header.SourceCode
                 }, CancellationToken.None);
