@@ -27,7 +27,7 @@ public class WebHooksRepository : IWebHooksRepository
     public async Task<bool> DeleteAsync(string id)
     {
         var deleteResult = await _context.DeleteOneAsync(id);
-        return deleteResult.IsAcknowledged;
+        return deleteResult.DeletedCount == 1;
     }
 
     public async Task<WebHook> GetAsync(string id, CancellationToken cancellationToken)
@@ -36,7 +36,6 @@ public class WebHooksRepository : IWebHooksRepository
             .Find(x => x.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
-        // Don't forget to mention the AsContract issue we have in the online advices.
         return webHook.ToContract();
     }
 
@@ -75,6 +74,7 @@ public class WebHooksRepository : IWebHooksRepository
         var mongoDbQuery = _context
             .AsQueryable()
             .BuildSpecificationQuery(new WebHooksForApplicationWithCodeSpecification(webHook.SourceCode))
+            .BuildSpecificationQuery(new WebHooksForClientWithCodeSpecification(webHook.ClientCode))
             .BuildSpecificationQuery(new WebHooksForTenantSpecification(webHook.TenantCode))
             .BuildSpecificationQuery(new WebHooksForEventWithCodeSpecification(webHook.EventCode));
 
