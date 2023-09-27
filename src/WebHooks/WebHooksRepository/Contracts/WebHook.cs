@@ -1,8 +1,5 @@
 namespace WebHooks.WebHooksRepository.Contracts;
 
-/// <summary>
-/// Public contract of the WebHooksAccessor Service.
-/// </summary>
 public class WebHook
 {
     public string Id { get; set; }

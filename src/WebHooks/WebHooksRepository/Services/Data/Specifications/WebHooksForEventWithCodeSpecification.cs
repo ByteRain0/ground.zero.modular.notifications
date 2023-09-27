@@ -6,7 +6,9 @@ namespace WebHooks.WebHooksRepository.Services.Data.Specifications;
 public class WebHooksForEventWithCodeSpecification : Specification<WebHookDataModel>
 {
     public WebHooksForEventWithCodeSpecification(string eventCode)
-        : base(webHook => webHook.EventCode.ToLower() == eventCode.ToLower())
+        : base(webHook =>
+            string.IsNullOrEmpty(eventCode)
+            || webHook.EventCode.ToLower() == eventCode.ToLower())
     {
     }
 }

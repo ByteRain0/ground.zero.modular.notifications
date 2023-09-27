@@ -40,7 +40,7 @@ internal class CreateWebHookCommandHandler : IRequestHandler<CreateWebHookComman
         if (!saved)
         {
             //TODO: later refactor this to a Result/ErrorOr pattern or at least custom exception
-            throw new InvalidOperationException("Failure during webhooks save");
+            throw new InvalidOperationException("Failure during WebHooks save");
         }
     }
 }
