@@ -2,10 +2,10 @@ using MediatR;
 using Shared.Pagination;
 using WebHooks.WebHooksRepository.Contracts;
 using WebHooks.WebHooksService.Contracts.Models;
-using WebHooks.WebHooksService.Contracts.Queries;
+using WebHooks.WebHooksService.Contracts.Queries.GetWebHooks;
 using WebHooks.WebHooksService.Services.Mappings;
 
-namespace WebHooks.WebHooksService.Services.Handlers.QueryHandlers;
+namespace WebHooks.WebHooksService.Services.Handlers.QueryHandlers.GetWebHooks;
 
 internal class GetWebHooksQueryHandler : IRequestHandler<GetWebHooksQuery, PagedList<WebHookDto>>
 {

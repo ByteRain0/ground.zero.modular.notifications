@@ -6,7 +6,9 @@ namespace WebHooks.WebHooksRepository.Services.Data.Specifications;
 public class WebHooksForClientWithCodeSpecification : Specification<WebHookDataModel>
 {
     public WebHooksForClientWithCodeSpecification(string clientCode) :
-        base(webhook => webhook.ClientCode.ToLower() == clientCode.ToLower())
+        base(webHook =>
+            string.IsNullOrEmpty(clientCode)
+            || webHook.ClientCode.ToLower() == clientCode.ToLower())
     {
     }
 }

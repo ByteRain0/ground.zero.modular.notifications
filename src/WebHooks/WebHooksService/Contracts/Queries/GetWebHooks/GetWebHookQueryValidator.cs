@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace WebHooks.WebHooksService.Contracts.Queries;
+namespace WebHooks.WebHooksService.Contracts.Queries.GetWebHooks;
 
 internal class GetWebHookQueryValidator : AbstractValidator<GetWebHooksQuery>
 {

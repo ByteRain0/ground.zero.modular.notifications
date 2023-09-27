@@ -30,6 +30,17 @@ public class WebHooksRepository : IWebHooksRepository
         return deleteResult.DeletedCount == 1;
     }
 
+    public async Task<WebHook?> GetById(string id)
+    {
+        var webHook = await _context.Find(id).FirstOrDefaultAsync();
+        if (webHook == null)
+        {
+            return null;
+        }
+
+        return webHook.ToContract();
+    }
+
     public async Task<WebHook> GetAsync(string id, CancellationToken cancellationToken)
     {
         var webHook = await _context
@@ -92,10 +103,10 @@ public class WebHooksRepository : IWebHooksRepository
     {
         return query.SortColumn?.ToLowerInvariant() switch
         {
-            "eventcode" => webhook => webhook.EventCode,
-            "tenantcode" => webhook => webhook.TenantCode,
-            "clientcode" => webhook => webhook.ClientCode,
-            "sourcecode" => webhook => webhook.SourceCode,
+            "eventcode" => webHook => webHook.EventCode,
+            "tenantcode" => webHook => webHook.TenantCode,
+            "clientcode" => webHook => webHook.ClientCode,
+            "sourcecode" => webHook => webHook.SourceCode,
             _ => application => application.EventCode
         };
     }}
