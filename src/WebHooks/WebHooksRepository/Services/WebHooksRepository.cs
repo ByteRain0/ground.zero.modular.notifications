@@ -41,7 +41,9 @@ public class WebHooksRepository : IWebHooksRepository
         return webHook.ToContract();
     }
 
-    public async Task<WebHook> GetAsync(string id, CancellationToken cancellationToken)
+    public async Task<WebHook> GetAsync(
+        string id,
+        CancellationToken cancellationToken)
     {
         var webHook = await _context
             .Find(x => x.Id == id)
@@ -50,7 +52,9 @@ public class WebHooksRepository : IWebHooksRepository
         return webHook.ToContract();
     }
 
-    public async Task<PagedList<WebHook>> GetListAsync(GetListAsyncQuery query, CancellationToken cancellationToken)
+    public async Task<PagedList<WebHook>> GetListAsync(
+        GetListAsyncQuery query,
+        CancellationToken cancellationToken)
     {
         var mongoDbQuery = _context
             .AsQueryable()
