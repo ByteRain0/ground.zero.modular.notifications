@@ -2,9 +2,6 @@ namespace Push.Contracts.Contract;
 
 public record IncomingEvent
 {
-    /// <summary>
-    /// Can be retrieved from the request header.
-    /// </summary>
     public string TenantCode { get; init; }
 
     public string SourceCode { get; init; }
