@@ -1,7 +1,9 @@
 using ApplicationRegistry.Infrastructure;
 using EventProcessor.Infrastructure;
+using Hangfire;
 using Push.Routing;
 using Push.Service.Infrastructure;
+using Push.Service.Outbox;
 using Shared.Cache.Distributed;
 using Shared.Cache.Output;
 using Shared.Messaging.RabbitMQ;
@@ -23,7 +25,7 @@ builder.Services
     .AddWebHooksService()
     .AddWebHooksRepository()
     .AddApplicationRegistryService(builder.Configuration)
-    .AddPushService()
+    .AddPushService(builder.Configuration)
     .AddHostedService<WorkerService>()
     .AddEventsProcessor();
 
@@ -32,7 +34,8 @@ var app = builder.Build();
 // Set up custom setting for your modules
 app
     .ApplyApplicationModuleMigrations()
-    .ApplyWebHooksMigrations();
+    .ApplyWebHooksMigrations()
+    .ApplyOutboxMigrations();
 
 // Since middleware is sequential if you are using cors use it before response caching.
 app.UseOutputCache();
@@ -42,6 +45,6 @@ app
     .UseWebHooksServiceEndpoints()
     .UsePushServiceEndpoints()
     .UseAppRegistryEndpoints()
-    .UseSwaggerRoutes();
-
+    .UseSwaggerRoutes()
+    .UseHangfireDashboard();
 app.Run();

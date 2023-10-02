@@ -9,6 +9,11 @@ public record Header
         Properties = new Dictionary<string, object>();
     }
 
+    public Header(Dictionary<string, object> properties)
+    {
+        Properties = properties;
+    }
+
     public Header(string sourceCode, string tenantCode, string eventCode)
     {
         Properties = new Dictionary<string, object>
