@@ -1,4 +1,5 @@
 using System.Text;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace Shared.Messaging.RabbitMQ;
@@ -7,10 +8,13 @@ public class MessageSender : IMessageSender
 {
     private readonly IModel _channel;
     private readonly RabbitMQSettings _rabbitSettings;
-    public MessageSender(RabbitMQSettings rabbitSettings, IModel channel)
+    private readonly ILogger<MessageSender> _logger;
+
+    public MessageSender(RabbitMQSettings rabbitSettings, IModel channel, ILogger<MessageSender> logger)
     {
-        _channel = channel;
         _rabbitSettings = rabbitSettings;
+        _channel = channel;
+        _logger = logger;
     }
 
     public void PublishMessage(Message message, string key)
@@ -26,6 +30,6 @@ public class MessageSender : IMessageSender
             basicProperties: properties,
             body: body);
 
-        Console.WriteLine(" [x] Sent '{0}':'{1}'", key, message);
+        _logger.LogInformation("Published message with key {Key} {Message}", key, message);
     }
 }

@@ -1,4 +1,5 @@
 using Push.Contracts.Contract;
+using Push.Service.Outbox;
 using Shared.Messaging.IntegrationEvents;
 using Shared.Messaging.RabbitMQ;
 
@@ -6,14 +7,14 @@ namespace Push.Service;
 
 internal class PushService
 {
-    private readonly IMessageSender _messageSender;
+    private readonly OutboxService _outboxService;
 
-    public PushService(IMessageSender messageSender)
+    public PushService(OutboxService outboxService)
     {
-        _messageSender = messageSender;
+        _outboxService = outboxService;
     }
 
-    public Task ProcessIncomingEventAsync(IncomingEvent @event)
+    public async Task ProcessIncomingEventAsync(IncomingEvent @event)
     {
         var message = new Message(
             header: new Header(@event.SourceCode, @event.TenantCode, @event.EventCode),
@@ -24,8 +25,6 @@ internal class PushService
             .ReplaceAppCodePlaceholderWith(@event.SourceCode)
             .ReplaceTenantCodePlaceholderWith(@event.TenantCode);
 
-        _messageSender.PublishMessage(message, routingKey);
-
-        return Task.CompletedTask;
+        await _outboxService.StoreMessage(message, routingKey);
     }
 }
