@@ -8,6 +8,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationRegistry\ApplicationRegistry.csproj" />
+    <ProjectReference Include="..\Push.Contracts\Push.Contracts.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\WebHooks.Contracts\WebHooks.Contracts.csproj" />
   </ItemGroup>
 </Project>

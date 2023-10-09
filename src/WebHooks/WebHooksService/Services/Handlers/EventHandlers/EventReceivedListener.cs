@@ -1,36 +1,26 @@
-using System.Text.Json;
-using Shared.Messaging.IntegrationEvents;
-using Shared.Messaging.IntegrationEvents.WebHooks;
-using Shared.Messaging.RabbitMQ;
+using MassTransit;
+using Push.Contracts.Contract;
+using Shared.Messaging;
+using WebHooks.Contracts.Commands.RelayWebHook;
 using WebHooks.WebHooksRepository.Contracts;
 
 namespace WebHooks.WebHooksService.Services.Handlers.EventHandlers;
 
-public class EventReceivedListener : IListener
+public class EventReceivedListener : IConsumer<IncomingEvent>
 {
     private readonly IWebHooksRepository _repository;
 
     private readonly IMessageSender _messageSender;
 
-    public string RoutingKey { get; }
-
     public EventReceivedListener(IWebHooksRepository repository, IMessageSender messageSender)
     {
-        RoutingKey = RoutingKeys.AppEventsTopic
-            .ReplaceAppCodePlaceholderWith("*")
-            .ReplaceTenantCodePlaceholderWith("*");
         _repository = repository;
         _messageSender = messageSender;
     }
 
-    public async Task ProcessMessage(Message message, string routingKey)
+    public async Task Consume(ConsumeContext<IncomingEvent> context)
     {
-        var incomingEvent = JsonSerializer.Deserialize<EventReceived>(message.Body);
-
-        if (incomingEvent is null)
-        {
-            //TODO: Treat this issue somehow
-        }
+        var incomingEvent = context.Message;
 
         var availableWebHooks = await _repository
             .GetListAsync(
@@ -38,26 +28,24 @@ public class EventReceivedListener : IListener
                 {
                     PageSize = int.MaxValue,
                     Page = 0,
-                    TenantCode = message.Header.TenantCode,
-                    EventCode = message.Header.EventCode,
-                    SourceCode = message.Header.SourceCode
+                    TenantCode = incomingEvent.TenantCode,
+                    EventCode = incomingEvent.EventCode,
+                    SourceCode = incomingEvent.SourceCode
                 }, CancellationToken.None);
 
         foreach (var availableWebHook in availableWebHooks.Items)
         {
-            var @event = new Message(
-                header: message.Header,
-                body: new WebHooksEventReceived
-                {
-                    Payload = incomingEvent!.Payload,
-                    Endpoint = availableWebHook.Endpoint
-                });
 
-            var key = RoutingKeys.WebHooksTopic
-                .ReplaceAppCodePlaceholderWith(message.Header.SourceCode!)
-                .ReplaceTenantCodePlaceholderWith(message.Header.TenantCode!);
+            var command = new RelayWebHookCommand()
+            {
+                TenantCode = incomingEvent.TenantCode,
+                EventCode = incomingEvent.EventCode,
+                SourceCode = incomingEvent.SourceCode,
+                Endpoint = availableWebHook.Endpoint,
+                Payload = incomingEvent.Payload
+            };
 
-            _messageSender.PublishMessage(@event, key);
+            await _messageSender.PublishMessageAsync(command, CancellationToken.None);
         }
     }
 }

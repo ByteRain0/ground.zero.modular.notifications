@@ -1,7 +1,7 @@
 using ApplicationRegistry.Contracts;
 using MediatR;
+using WebHooks.Contracts.Commands.CreateWebHook;
 using WebHooks.WebHooksRepository.Contracts;
-using WebHooks.WebHooksService.Contracts.Commands.CreateWebHook;
 
 namespace WebHooks.WebHooksService.Services.Handlers.CommandHandlers.CreateWebHook;
 

@@ -1,8 +1,8 @@
 using MediatR;
 using Shared.Pagination;
+using WebHooks.Contracts.Models;
+using WebHooks.Contracts.Queries.GetWebHooks;
 using WebHooks.WebHooksRepository.Contracts;
-using WebHooks.WebHooksService.Contracts.Models;
-using WebHooks.WebHooksService.Contracts.Queries.GetWebHooks;
 using WebHooks.WebHooksService.Services.Mappings;
 
 namespace WebHooks.WebHooksService.Services.Handlers.QueryHandlers.GetWebHooks;

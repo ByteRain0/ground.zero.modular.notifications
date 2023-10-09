@@ -7,11 +7,11 @@ using O9d.AspNet.FluentValidation;
 using Shared.Pagination;
 using Shared.Routing;
 using Shared.Sorting;
-using WebHooks.WebHooksService.Contracts.Commands.CreateWebHook;
-using WebHooks.WebHooksService.Contracts.Commands.DeleteWebHook;
-using WebHooks.WebHooksService.Contracts.Models;
-using WebHooks.WebHooksService.Contracts.Queries.GetWebHook;
-using WebHooks.WebHooksService.Contracts.Queries.GetWebHooks;
+using WebHooks.Contracts.Commands.CreateWebHook;
+using WebHooks.Contracts.Commands.DeleteWebHook;
+using WebHooks.Contracts.Models;
+using WebHooks.Contracts.Queries.GetWebHook;
+using WebHooks.Contracts.Queries.GetWebHooks;
 
 namespace WebHooks.WebHooksService.Routing;
 

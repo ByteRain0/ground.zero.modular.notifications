@@ -1,7 +1,7 @@
 using MediatR;
+using WebHooks.Contracts.Models;
+using WebHooks.Contracts.Queries.GetWebHook;
 using WebHooks.WebHooksRepository.Contracts;
-using WebHooks.WebHooksService.Contracts.Models;
-using WebHooks.WebHooksService.Contracts.Queries.GetWebHook;
 using WebHooks.WebHooksService.Services.Mappings;
 
 namespace WebHooks.WebHooksService.Services.Handlers.QueryHandlers.GetWebHook;
