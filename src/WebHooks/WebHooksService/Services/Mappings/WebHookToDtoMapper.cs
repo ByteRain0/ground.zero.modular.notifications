@@ -1,5 +1,5 @@
+using WebHooks.Contracts.Models;
 using WebHooks.WebHooksRepository.Contracts;
-using WebHooks.WebHooksService.Contracts.Models;
 
 namespace WebHooks.WebHooksService.Services.Mappings;
 

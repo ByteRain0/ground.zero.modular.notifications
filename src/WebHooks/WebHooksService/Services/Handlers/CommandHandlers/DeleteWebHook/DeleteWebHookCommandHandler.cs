@@ -1,6 +1,6 @@
 using MediatR;
+using WebHooks.Contracts.Commands.DeleteWebHook;
 using WebHooks.WebHooksRepository.Contracts;
-using WebHooks.WebHooksService.Contracts.Commands.DeleteWebHook;
 
 namespace WebHooks.WebHooksService.Services.Handlers.CommandHandlers.DeleteWebHook;
 

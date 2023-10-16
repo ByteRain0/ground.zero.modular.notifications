@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Messaging.RabbitMQ;
 using WebHooks.WebHooksService.Services.Handlers.CommandHandlers.CreateWebHook;
 using WebHooks.WebHooksService.Services.Handlers.EventHandlers;
 
@@ -13,8 +12,6 @@ public static class WebHooksServiceInstaller
         {
             x.RegisterServicesFromAssembly(typeof(CreateWebHookCommandHandler).Assembly);
         });
-
-        services.AddSingleton<IListener, EventReceivedListener>();
         return services;
     }
 }

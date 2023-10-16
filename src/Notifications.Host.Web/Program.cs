@@ -3,10 +3,9 @@ using EventProcessor.Infrastructure;
 using Hangfire;
 using Push.Routing;
 using Push.Service.Infrastructure;
-using Push.Service.Outbox;
 using Shared.Cache.Distributed;
 using Shared.Cache.Output;
-using Shared.Messaging.RabbitMQ;
+using Shared.Messaging;
 using Shared.Swagger;
 using Shared.TokenService;
 using WebHooks.WebHooksRepository.Services.Infrastructure;
@@ -19,14 +18,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddCacheService(builder.Configuration)
     .AddConfiguredOutputCache()
-    .AddRabbitMQ(builder.Configuration)
+    .AddAsyncProcessing(builder.Configuration)
     .AddTokenAccessor()
     .AddSwagger()
     .AddWebHooksService()
     .AddWebHooksRepository()
     .AddApplicationRegistryService(builder.Configuration)
     .AddPushService(builder.Configuration)
-    .AddHostedService<WorkerService>()
     .AddEventsProcessor();
 
 var app = builder.Build();
@@ -45,6 +43,5 @@ app
     .UseWebHooksServiceEndpoints()
     .UsePushServiceEndpoints()
     .UseAppRegistryEndpoints()
-    .UseSwaggerRoutes()
-    .UseHangfireDashboard();
+    .UseSwaggerRoutes();
 app.Run();

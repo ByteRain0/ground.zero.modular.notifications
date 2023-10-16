@@ -6,5 +6,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\WebHooks.Contracts\WebHooks.Contracts.csproj" />
   </ItemGroup>
 </Project>
