@@ -1,6 +1,7 @@
 using ApplicationRegistry.Infrastructure;
+using EventProcessor;
 using EventProcessor.Infrastructure;
-using Hangfire;
+using Push;
 using Push.Routing;
 using Push.Service.Infrastructure;
 using Shared.Cache.Distributed;
@@ -8,6 +9,7 @@ using Shared.Cache.Output;
 using Shared.Messaging;
 using Shared.Swagger;
 using Shared.TokenService;
+using WebHooks;
 using WebHooks.WebHooksRepository.Services.Infrastructure;
 using WebHooks.WebHooksService.Routing;
 using WebHooks.WebHooksService.Services.Infrastructure;
@@ -18,7 +20,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddCacheService(builder.Configuration)
     .AddConfiguredOutputCache()
-    .AddAsyncProcessing(builder.Configuration)
+    .AddAsyncProcessing(builder.Configuration,
+        assembliesWithConsumers: new []
+        {
+            typeof(IPushServiceMarker).Assembly,
+            typeof(IWebHooksServiceMarker).Assembly,
+            typeof(IEventProcessorMarker).Assembly
+        })
     .AddTokenAccessor()
     .AddSwagger()
     .AddWebHooksService()

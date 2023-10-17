@@ -9,16 +9,15 @@ public interface IMessageSender
 
 internal class MessageSender : IMessageSender
 {
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IBus _bus;
 
-    public MessageSender(IPublishEndpoint publishEndpoint)
+    public MessageSender(IBus bus)
     {
-        _publishEndpoint = publishEndpoint;
+        _bus = bus;
     }
 
     public async Task PublishMessageAsync<T>(T message, CancellationToken cancellationToken) where T : class
     {
-        await _publishEndpoint.Publish(message, cancellationToken);
-
+        await _bus.Publish(message, cancellationToken);
     }
 }

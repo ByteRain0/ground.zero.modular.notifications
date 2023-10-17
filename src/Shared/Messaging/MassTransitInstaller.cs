@@ -1,5 +1,6 @@
 using System.Reflection;
 using MassTransit;
+using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,7 @@ namespace Shared.Messaging;
 
 public static class MassTransitInstaller
 {
-    public static IServiceCollection AddAsyncProcessing(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAsyncProcessing(this IServiceCollection services, IConfiguration configuration, Assembly[] assembliesWithConsumers)
     {
         //Since we don't want the config to spill out do not add it as options to DI container.
         var configData = configuration.GetSection("RabbitMQSettings");
@@ -26,14 +27,27 @@ public static class MassTransitInstaller
                 options.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
                 options.MigrationsHistoryTable($"__{nameof(RegistrationDbContext)}");
 
-                options.EnableRetryOnFailure(5);
+                options.EnableRetryOnFailure(3);
                 options.MinBatchSize(1);
-                //options.MigrationsAssembly("Notifications.Host.Web");
             });
         });
 
         services.AddMassTransit(x =>
         {
+            x.SetKebabCaseEndpointNameFormatter();
+
+            x.AddEntityFrameworkOutbox<RegistrationDbContext>(o =>
+            {
+                // configure which database lock provider to use (Postgres, SqlServer, or MySql)
+                o.UsePostgres();
+
+                // enable the bus outbox
+                o.UseBusOutbox();
+
+                o.QueryDelay = TimeSpan.FromSeconds(1);
+            });
+
+            x.AddConsumers(assembliesWithConsumers);
             x.UsingRabbitMq((context,cfg) =>
             {
                 cfg.Host(brokerSettings.Host, "/", h => {
@@ -43,16 +57,9 @@ public static class MassTransitInstaller
                 cfg.AutoStart = true;
                 cfg.ConfigureEndpoints(context);
             });
-
-            x.AddEntityFrameworkOutbox<RegistrationDbContext>(o =>
-            {
-                // configure which database lock provider to use (Postgres, SqlServer, or MySql)
-                o.UsePostgres();
-
-                // enable the bus outbox
-                o.UseBusOutbox();
-            });
         });
+
+        services.AddSingleton<ILockStatementProvider, PostgresLockStatementProvider>();
 
         services.AddTransient<IMessageSender, MessageSender>();
 
