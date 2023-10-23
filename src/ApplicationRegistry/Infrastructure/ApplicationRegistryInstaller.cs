@@ -3,6 +3,7 @@ using ApplicationRegistry.CrossCutting;
 using ApplicationRegistry.Data;
 using ApplicationRegistry.Routing;
 using ApplicationRegistry.Services;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,14 @@ public static class ApplicationRegistryInstaller
         services
             .AddScoped<IApplicationsRepository, ApplicationRepository>()
             .Decorate<IApplicationsRepository, ApplicationRepositoryCacheDecorator>();
+
+        services.AddTransient<StatisticsService>();
+
+        //Registering the background job example setup.
+        RecurringJob.AddOrUpdate("statistics", () =>
+            services.BuildServiceProvider().GetRequiredService<StatisticsService>().GatherStatisticsAsync(),
+            Cron.Minutely());
+
 
         return services;
     }

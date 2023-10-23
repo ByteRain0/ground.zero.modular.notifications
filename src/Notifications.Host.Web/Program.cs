@@ -1,9 +1,11 @@
 using ApplicationRegistry.Infrastructure;
 using EventProcessor;
 using EventProcessor.Infrastructure;
+using Hangfire;
 using Push;
 using Push.Routing;
 using Push.Service.Infrastructure;
+using Shared.Background;
 using Shared.Cache.Distributed;
 using Shared.Cache.Output;
 using Shared.Messaging;
@@ -18,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Register components
 builder.Services
+    .AddBackgroundJobs(builder.Configuration)
     .AddCacheService(builder.Configuration)
     .AddConfiguredOutputCache()
     .AddAsyncProcessing(builder.Configuration,
@@ -33,7 +36,8 @@ builder.Services
     .AddWebHooksRepository()
     .AddApplicationRegistryService(builder.Configuration)
     .AddPushService(builder.Configuration)
-    .AddEventsProcessor();
+    .AddEventsProcessor()
+    ;
 
 var app = builder.Build();
 
@@ -51,5 +55,7 @@ app
     .UseWebHooksServiceEndpoints()
     .UsePushServiceEndpoints()
     .UseAppRegistryEndpoints()
-    .UseSwaggerRoutes();
+    .UseSwaggerRoutes()
+    .UseHangfireDashboard();
+
 app.Run();
