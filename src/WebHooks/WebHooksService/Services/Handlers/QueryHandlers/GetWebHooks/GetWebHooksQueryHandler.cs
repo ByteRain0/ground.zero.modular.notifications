@@ -1,13 +1,15 @@
+using FluentResults;
 using MediatR;
 using Shared.Pagination;
 using WebHooks.Contracts.Models;
 using WebHooks.Contracts.Queries.GetWebHooks;
 using WebHooks.WebHooksRepository.Contracts;
 using WebHooks.WebHooksService.Services.Mappings;
+using ErrorCodes = WebHooks.Contracts.ErrorCodes;
 
 namespace WebHooks.WebHooksService.Services.Handlers.QueryHandlers.GetWebHooks;
 
-internal class GetWebHooksQueryHandler : IRequestHandler<GetWebHooksQuery, PagedList<WebHookDto>>
+internal class GetWebHooksQueryHandler : IRequestHandler<GetWebHooksQuery, Result<PagedList<WebHookDto>>>
 {
     private readonly IWebHooksRepository _webHooksRepository;
 
@@ -16,9 +18,11 @@ internal class GetWebHooksQueryHandler : IRequestHandler<GetWebHooksQuery, Paged
         _webHooksRepository = webHooksRepository;
     }
 
-    public async Task<PagedList<WebHookDto>> Handle(GetWebHooksQuery request, CancellationToken cancellationToken)
+    public async Task<Result<PagedList<WebHookDto>>> Handle(
+        GetWebHooksQuery request,
+        CancellationToken cancellationToken)
     {
-        var webHooksList = await _webHooksRepository.GetListAsync(new GetListAsyncQuery
+        var webhooksRetrievalOperation = await _webHooksRepository.GetListAsync(new GetListAsyncQuery
         {
             Page = request.Page,
             PageSize = request.PageSize,
@@ -29,10 +33,15 @@ internal class GetWebHooksQueryHandler : IRequestHandler<GetWebHooksQuery, Paged
             TenantCode = request.TennantCode,
         }, cancellationToken);
 
-        return new PagedList<WebHookDto>(
-            webHooksList.Items.Select(x => x.ToDto()).ToList(),
-            webHooksList.Page,
-            webHooksList.PageSize,
-            webHooksList.TotalCount);
+        if (webhooksRetrievalOperation.IsFailed)
+        {
+            return Result.Fail(ErrorCodes.GeneralModuleIssues);
+        }
+
+        return Result.Ok(new PagedList<WebHookDto>(
+            webhooksRetrievalOperation.Value.Items.Select(x => x.ToDto()).ToList(),
+            webhooksRetrievalOperation.Value.Page,
+            webhooksRetrievalOperation.Value.PageSize,
+            webhooksRetrievalOperation.Value.TotalCount));
     }
 }

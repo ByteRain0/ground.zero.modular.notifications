@@ -8,6 +8,7 @@ using Push.Service.Infrastructure;
 using Shared.Background;
 using Shared.Cache.Distributed;
 using Shared.Cache.Output;
+using Shared.ErrorHandling;
 using Shared.Messaging;
 using Shared.Swagger;
 using Shared.TokenService;
@@ -21,6 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Register components
 builder.Services
     .AddBackgroundJobs(builder.Configuration)
+    .AddGlobalErrorHandling()
     .AddCacheService(builder.Configuration)
     .AddConfiguredOutputCache()
     .AddAsyncProcessing(builder.Configuration,
@@ -45,10 +47,15 @@ var app = builder.Build();
 app
     .ApplyApplicationModuleMigrations()
     .ApplyWebHooksMigrations()
-    .ApplyOutboxMigrations();
+    .ApplyOutboxMigrations()
+    ;
 
+// Register Middleware components separately for readability
+app
 // Since middleware is sequential if you are using cors use it before response caching.
-app.UseOutputCache();
+    .UseOutputCache()
+    .UseCustomGlobalErrorHandling()
+    ;
 
 // Register available endpoints
 app
@@ -56,6 +63,7 @@ app
     .UsePushServiceEndpoints()
     .UseAppRegistryEndpoints()
     .UseSwaggerRoutes()
-    .UseHangfireDashboard();
+    .UseHangfireDashboard()
+    ;
 
 app.Run();

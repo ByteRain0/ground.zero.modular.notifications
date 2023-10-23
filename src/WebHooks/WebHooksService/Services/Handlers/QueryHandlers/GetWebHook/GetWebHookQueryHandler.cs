@@ -1,12 +1,15 @@
+using FluentResults;
 using MediatR;
+using Shared.Result;
 using WebHooks.Contracts.Models;
 using WebHooks.Contracts.Queries.GetWebHook;
 using WebHooks.WebHooksRepository.Contracts;
 using WebHooks.WebHooksService.Services.Mappings;
+using ErrorCodes = WebHooks.Contracts.ErrorCodes;
 
 namespace WebHooks.WebHooksService.Services.Handlers.QueryHandlers.GetWebHook;
 
-public class GetWebHookQueryHandler : IRequestHandler<GetWebHookQuery, WebHookDto?>
+public class GetWebHookQueryHandler : IRequestHandler<GetWebHookQuery, Result<WebHookDto>>
 {
     private readonly IWebHooksRepository _webHooksRepository;
 
@@ -15,15 +18,20 @@ public class GetWebHookQueryHandler : IRequestHandler<GetWebHookQuery, WebHookDt
         _webHooksRepository = webHooksRepository;
     }
 
-    public async Task<WebHookDto?> Handle(GetWebHookQuery request, CancellationToken cancellationToken)
+    public async Task<Result<WebHookDto>> Handle(GetWebHookQuery request, CancellationToken cancellationToken)
     {
-        var webHook = await _webHooksRepository.GetById(request.Id.ToString());
+        var retrievalOperation = await _webHooksRepository.GetById(request.Id.ToString());
 
-        if (webHook == null)
+        if (retrievalOperation.IsFailed && retrievalOperation.IsNotFoundError())
         {
-            return default;
+            return Result.Fail(ErrorCodes.WebHookNotFound);
         }
 
-        return webHook.ToDto();
+        if (retrievalOperation.IsFailed)
+        {
+            return Result.Fail(ErrorCodes.GeneralModuleIssues);
+        }
+
+        return retrievalOperation.Value.ToDto();
     }
 }

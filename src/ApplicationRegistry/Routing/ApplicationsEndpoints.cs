@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Pagination;
+using Shared.Result;
 using Shared.Routing;
 using Shared.Sorting;
 
@@ -38,22 +39,27 @@ public class ApplicationsEndpoints : IEndpointsDefinition
             .WithName("InvalidateCache");
     }
 
-    public static async Task<IResult> GetApplicationByCode(
+    private static async Task<IResult> GetApplicationByCode(
         string code,
         IApplicationsRepository repository,
         CancellationToken cancellationToken)
     {
         var application = await repository.GetByCodeAsync(code, cancellationToken);
 
-        if (application is null)
+        if (application.IsNotFoundError())
         {
             return Results.NotFound();
+        }
+
+        if (application.IsFailed)
+        {
+            return Results.Problem(ErrorCodes.ApplicationNotFound);
         }
 
         return Results.Ok(application);
     }
 
-    public static async Task<IResult> GetApplications(
+    private static async Task<IResult> GetApplications(
         [FromQuery] string? sortColumn,
         [FromQuery] SortOrder? sortOrder,
         [FromQuery] int page,
@@ -69,10 +75,16 @@ public class ApplicationsEndpoints : IEndpointsDefinition
             PageSize = pageSize
         };
         var applications = await repository.GetListAsync(query, cancellationToken);
-        return Results.Ok(applications);
+
+        if (applications.IsFailed)
+        {
+            return Results.Problem(ErrorCodes.GeneralModuleIssues);
+        }
+
+        return Results.Ok(applications.Value);
     }
 
-    public static async Task<IResult> InvalidateApplicationsCache(
+    private static async Task<IResult> InvalidateApplicationsCache(
         IOutputCacheStore cacheStore,
         CancellationToken cancellationToken)
     {

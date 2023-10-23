@@ -3,6 +3,7 @@ using Push.Contracts.Contract;
 using Shared.Messaging;
 using WebHooks.Contracts.Commands.RelayWebHook;
 using WebHooks.WebHooksRepository.Contracts;
+using ErrorCodes = WebHooks.Contracts.ErrorCodes;
 
 namespace WebHooks.WebHooksService.Services.Handlers.EventHandlers;
 
@@ -22,7 +23,7 @@ public class EventReceivedListener : IConsumer<IncomingEvent>
     {
         var incomingEvent = context.Message;
 
-        var availableWebHooks = await _repository
+        var dataRetrieval = await _repository
             .GetListAsync(
                 new GetListAsyncQuery
                 {
@@ -33,10 +34,14 @@ public class EventReceivedListener : IConsumer<IncomingEvent>
                     SourceCode = incomingEvent.SourceCode
                 }, CancellationToken.None);
 
-        foreach (var availableWebHook in availableWebHooks.Items)
+        if (dataRetrieval.IsFailed)
         {
+            throw new InvalidOperationException(ErrorCodes.GeneralModuleIssues);
+        }
 
-            var command = new RelayWebHookCommand()
+        foreach (var availableWebHook in dataRetrieval.Value.Items)
+        {
+            var command = new RelayWebHookCommand
             {
                 TenantCode = incomingEvent.TenantCode,
                 EventCode = incomingEvent.EventCode,

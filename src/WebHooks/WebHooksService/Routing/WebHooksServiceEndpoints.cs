@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using O9d.AspNet.FluentValidation;
 using Shared.Pagination;
+using Shared.Result;
 using Shared.Routing;
 using Shared.Sorting;
+using WebHooks.Contracts;
 using WebHooks.Contracts.Commands.CreateWebHook;
 using WebHooks.Contracts.Commands.DeleteWebHook;
 using WebHooks.Contracts.Models;
@@ -65,11 +67,18 @@ public class WebHooksServiceEndpoints : IEndpointsDefinition
             SortOrder = sortOrder
         };
 
-        return Results.Ok(await mediator.Send(query, cancellationToken));
+        var operationResult = await mediator.Send(query, cancellationToken);
+
+        if (operationResult.IsFailed)
+        {
+            return Results.Problem(ErrorCodes.DataRetrievalIssues);
+        }
+
+        return Results.Ok(operationResult.Value);
     }
 
     private static async Task<IResult> CreateWebHook(
-        [Validate][FromBody]CreateWebHookCommand command,
+        [Validate] [FromBody] CreateWebHookCommand command,
         [FromServices] IMediator mediator)
     {
         await mediator.Send(command);
@@ -80,14 +89,24 @@ public class WebHooksServiceEndpoints : IEndpointsDefinition
         [Validate] [FromBody] DeleteWebHookCommand command,
         [FromServices] IMediator mediator)
     {
-        var webHook = await mediator.Send(new GetWebHookQuery() { Id = command.Id });
+        var webHook = await mediator.Send(new GetWebHookQuery() {Id = command.Id});
 
-        if (webHook == null)
+        if (webHook.IsFailed && webHook.IsNotFoundError())
         {
             return Results.NotFound();
         }
 
-        await mediator.Send(command);
+        if (webHook.IsFailed)
+        {
+            return Results.Problem(ErrorCodes.GeneralModuleIssues);
+        }
+
+        var operation = await mediator.Send(command);
+
+        if (operation.IsFailed)
+        {
+            return Results.Problem(ErrorCodes.DataMutationFailure);
+        }
 
         return Results.NoContent();
     }

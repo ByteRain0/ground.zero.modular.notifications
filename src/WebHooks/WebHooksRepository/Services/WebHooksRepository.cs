@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using FluentResults;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Shared.Pagination;
@@ -24,24 +25,36 @@ public class WebHooksRepository : IWebHooksRepository
         _context = mongoDatabase.GetCollection<WebHookDataModel>(mongoDbSettings.Value.WebHooksCollectionName);
     }
 
-    public async Task<bool> DeleteAsync(string id)
+    public async Task<Result> DeleteAsync(string id)
     {
-        var deleteResult = await _context.DeleteOneAsync(id);
-        return deleteResult.DeletedCount == 1;
+        //This try catch can be either a Decorator or some form of Middleware
+        try
+        {
+            var deleteResult = await _context.DeleteOneAsync(id);
+            return deleteResult.DeletedCount == 1
+                ? Result.Ok()
+                : Result.Fail(ErrorCodes.DeleteIssues);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return Result.Fail(ErrorCodes.GeneralIssues);
+        }
     }
 
-    public async Task<WebHook?> GetById(string id)
+    public async Task<Result<WebHook>> GetById(string id)
     {
         var webHook = await _context.Find(id).FirstOrDefaultAsync();
-        if (webHook == null)
+
+        if (webHook is null)
         {
-            return null;
+            return Result.Fail(ErrorCodes.WebHookNotFound);
         }
 
         return webHook.ToContract();
     }
 
-    public async Task<WebHook> GetAsync(
+    public async Task<Result<WebHook>> GetAsync(
         string id,
         CancellationToken cancellationToken)
     {
@@ -49,10 +62,15 @@ public class WebHooksRepository : IWebHooksRepository
             .Find(x => x.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
-        return webHook.ToContract();
+        if (webHook is null)
+        {
+            return Result.Fail(ErrorCodes.WebHookNotFound);
+        }
+
+        return Result.Ok(webHook.ToContract());
     }
 
-    public async Task<PagedList<WebHook>> GetListAsync(
+    public async Task<Result<PagedList<WebHook>>> GetListAsync(
         GetListAsyncQuery query,
         CancellationToken cancellationToken)
     {
@@ -81,10 +99,10 @@ public class WebHooksRepository : IWebHooksRepository
             .Take(query.PageSize)
             .ToListAsync(cancellationToken:cancellationToken);
 
-        return new PagedList<WebHook>(list.Select(x => x.ToContract()).ToList(), query.Page, query.PageSize, totalCount);
+        return Result.Ok(new PagedList<WebHook>(list.Select(x => x.ToContract()).ToList(), query.Page, query.PageSize, totalCount));
     }
 
-    public async Task<bool> SaveAsync(WebHook webHook)
+    public async Task<Result> SaveAsync(WebHook webHook)
     {
         var mongoDbQuery = _context
             .AsQueryable()
@@ -95,11 +113,20 @@ public class WebHooksRepository : IWebHooksRepository
 
         if (await mongoDbQuery.AnyAsync())
         {
-            return true;
+            return Result.Fail(ErrorCodes.AlreadyExists);
         }
 
-        await _context.InsertOneAsync(webHook.ToDataModel());
-        return true;
+        try
+        {
+            await _context.InsertOneAsync(webHook.ToDataModel());
+            return Result.Ok();
+        }
+        catch (Exception e)
+        {
+            //TODO: add this to logging rather.
+            Console.WriteLine(e.Message);
+            return Result.Fail(ErrorCodes.GeneralIssues);
+        }
     }
 
     private static Expression<Func<WebHookDataModel, object>> GetWebHooksSortColumn(

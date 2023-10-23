@@ -6,6 +6,7 @@ using ApplicationRegistry.Data;
 using ApplicationRegistry.Data.Mappings;
 using ApplicationRegistry.Data.Models;
 using ApplicationRegistry.Data.Specifications;
+using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using Shared.Pagination;
 using Shared.Sorting;
@@ -22,7 +23,7 @@ internal class ApplicationRepository : IApplicationsRepository
         _context = context;
     }
 
-    public async ValueTask<Application?> GetByCodeAsync(
+    public async ValueTask<Result<Application>> GetByCodeAsync(
         string code,
         CancellationToken cancellationToken)
     {
@@ -32,10 +33,15 @@ internal class ApplicationRepository : IApplicationsRepository
                 specification: new ApplicationWithEventsByCodeSpecification(code))
             .FirstOrDefaultAsync(cancellationToken);
 
-        return application?.ToContract();
+        if (application is null)
+        {
+            return Result.Fail(ErrorCodes.ApplicationNotFound);
+        }
+
+        return Result.Ok(application.ToContract());
     }
 
-    public async ValueTask<PagedList<Application>> GetListAsync(
+    public async ValueTask<Result<PagedList<Application>>> GetListAsync(
         GetApplicationListQuery query,
         CancellationToken cancellationToken)
     {
@@ -56,11 +62,13 @@ internal class ApplicationRepository : IApplicationsRepository
             }
         }
 
-        return await PagedListExtensions<Application>.CreateAsync(
+        var list = await PagedListExtensions<Application>.CreateAsync(
             source: dbQuery.Select(x => x.ToContract()),
             page: query.Page,
             pageSize: query.PageSize,
             cancellationToken: cancellationToken);
+
+        return Result.Ok(list);
     }
 
     private static Expression<Func<ApplicationDataModel, object>> GetApplicationSortColumn(
