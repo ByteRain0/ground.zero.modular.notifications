@@ -1,3 +1,4 @@
+using FluentResults;
 using MediatR;
 using Shared.Pagination;
 using Shared.Sorting;
@@ -5,7 +6,7 @@ using WebHooks.Contracts.Models;
 
 namespace WebHooks.Contracts.Queries.GetWebHooks;
 
-public record GetWebHooksQuery : IRequest<PagedList<WebHookDto>>, IPagedQuery, ISortedQuery
+public record GetWebHooksQuery : IRequest<Result<PagedList<WebHookDto>>>, IPagedQuery, ISortedQuery
 {
     public required string SourceCode { get; set; }
 

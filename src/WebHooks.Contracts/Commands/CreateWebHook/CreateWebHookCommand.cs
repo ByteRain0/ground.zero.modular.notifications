@@ -1,8 +1,9 @@
+using FluentResults;
 using MediatR;
 
 namespace WebHooks.Contracts.Commands.CreateWebHook;
 
-public record CreateWebHookCommand : IRequest
+public record CreateWebHookCommand : IRequest<Result>
 {
     public required Uri Endpoint { get; init; }
 

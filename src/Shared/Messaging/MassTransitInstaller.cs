@@ -44,7 +44,7 @@ public static class MassTransitInstaller
                 // enable the bus outbox
                 o.UseBusOutbox();
 
-                o.QueryDelay = TimeSpan.FromSeconds(1);
+                o.QueryDelay = TimeSpan.FromMinutes(1);
             });
 
             x.AddConsumers(assembliesWithConsumers);

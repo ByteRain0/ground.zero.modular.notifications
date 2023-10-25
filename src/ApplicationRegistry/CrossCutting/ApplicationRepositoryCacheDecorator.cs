@@ -1,6 +1,7 @@
 using ApplicationRegistry.Contracts;
 using ApplicationRegistry.Contracts.Models;
 using ApplicationRegistry.Contracts.Queries;
+using FluentResults;
 using Shared.Cache.Distributed;
 using Shared.Pagination;
 
@@ -17,14 +18,14 @@ public class ApplicationRepositoryCacheDecorator : IApplicationsRepository
         _cacheService = cacheService;
     }
 
-    public ValueTask<PagedList<Application>> GetListAsync(
+    public ValueTask<Result<PagedList<Application>>> GetListAsync(
         GetApplicationListQuery query,
         CancellationToken cancellationToken)
     {
         return _next.GetListAsync(query, cancellationToken);
     }
 
-    public async ValueTask<Application?> GetByCodeAsync(
+    public async ValueTask<Result<Application>> GetByCodeAsync(
         string code,
         CancellationToken cancellationToken)
     {
@@ -33,14 +34,14 @@ public class ApplicationRepositoryCacheDecorator : IApplicationsRepository
 
         if (cachedApplication is not null)
         {
-            return cachedApplication;
+            return Result.Ok(cachedApplication);
         }
 
         var application = await _next.GetByCodeAsync(code, cancellationToken);
 
         if (application is null)
         {
-            return null;
+            return Result.Fail(ErrorCodes.ApplicationNotFound);
         }
 
         await _cacheService.SetValueAsync(cacheKey, application);
