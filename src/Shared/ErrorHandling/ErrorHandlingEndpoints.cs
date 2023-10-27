@@ -14,20 +14,11 @@ public class ErrorHandlingEndpoints : IEndpointsDefinition
     public static void ConfigureEndpoints(IEndpointRouteBuilder app)
     {
         app.Map("/error", HandleError);
-
-        app.Map("/exception", ()
-            => { throw new InvalidOperationException("Sample Exception"); });
     }
 
     private static IResult HandleError(HttpContext httpContext)
     {
-        var exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
-
-        if (exception is not null)
-        {
-            return Results.Problem(exception.Message);
-        }
-
-        return Results.Problem();
+        var exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error!;
+        return Results.Problem(exception.Message);
     }
 }

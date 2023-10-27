@@ -12,19 +12,11 @@ public static class ErrorHandlingInstaller
         return services;
     }
 
-    public static IApplicationBuilder UseCustomGlobalErrorHandling(this IApplicationBuilder app)
+    public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
     {
         app.UseExceptionHandler("/error");
         app.UseStatusCodePages();
         app.UseEndpoints<ErrorHandlingEndpoints>();
-        return app;
-    }
-
-    public static IApplicationBuilder UseBuiltInErrorHandling(this IApplicationBuilder app)
-    {
-        app.UseExceptionHandler();
-        app.UseStatusCodePages();
-        app.UseEndpoints<SimplifiedErrorHandlingEndpoints>();
         return app;
     }
 }

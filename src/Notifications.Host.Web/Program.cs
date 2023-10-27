@@ -54,7 +54,7 @@ app
 app
 // Since middleware is sequential if you are using cors use it before response caching.
     .UseOutputCache()
-    .UseCustomGlobalErrorHandling()
+    .UseErrorHandling()
     ;
 
 // Register available endpoints
