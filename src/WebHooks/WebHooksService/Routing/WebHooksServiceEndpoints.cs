@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -21,10 +22,16 @@ public class WebHooksServiceEndpoints : IEndpointsDefinition
 {
     public static void ConfigureEndpoints(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/webHooks")
+        var versionSet = app.NewApiVersionSet()
+            .HasApiVersion(new ApiVersion(1.0))
+            .ReportApiVersions()
+            .Build();
+
+        var group = app.MapGroup("api/v{version:apiVersion}/webHooks")
             .WithTags("WebHooks")
             .WithOpenApi()
-            .WithValidationFilter();
+            .WithValidationFilter()
+            .WithApiVersionSet(versionSet);
 
         group.MapPost("/", CreateWebHook)
             .WithName("CreateWebHook")
@@ -53,7 +60,7 @@ public class WebHooksServiceEndpoints : IEndpointsDefinition
         int? pageSize,
         string? sortColumn,
         SortOrder? sortOrder,
-        IMediator mediator,
+        [FromServices] IMediator mediator,
         CancellationToken cancellationToken)
     {
         var query = new GetWebHooksQuery

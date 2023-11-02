@@ -26,10 +26,9 @@ builder.Services
     .AddCacheService(builder.Configuration)
     .AddConfiguredOutputCache()
     .AddAsyncProcessing(builder.Configuration,
-        assembliesWithConsumers: new []
+        assembliesWithConsumers: new[]
         {
-            typeof(IPushServiceMarker).Assembly,
-            typeof(IWebHooksServiceMarker).Assembly,
+            typeof(IPushServiceMarker).Assembly, typeof(IWebHooksServiceMarker).Assembly,
             typeof(IEventProcessorMarker).Assembly
         })
     .AddTokenAccessor()
@@ -38,8 +37,7 @@ builder.Services
     .AddWebHooksRepository()
     .AddApplicationRegistryService(builder.Configuration)
     .AddPushService(builder.Configuration)
-    .AddEventsProcessor()
-    ;
+    .AddEventsProcessor();
 
 var app = builder.Build();
 
@@ -62,8 +60,19 @@ app
     .UseWebHooksServiceEndpoints()
     .UsePushServiceEndpoints()
     .UseAppRegistryEndpoints()
-    .UseSwaggerRoutes()
     .UseHangfireDashboard()
     ;
+
+app.UseSwagger();
+app.UseSwaggerUI(opts =>
+{
+    foreach (var description in app.DescribeApiVersions())
+    {
+        opts.SwaggerEndpoint(
+            $"/swagger/{description.GroupName}/swagger.json",
+            description.GroupName);
+    }
+    opts.RoutePrefix = string.Empty;
+});
 
 app.Run();
