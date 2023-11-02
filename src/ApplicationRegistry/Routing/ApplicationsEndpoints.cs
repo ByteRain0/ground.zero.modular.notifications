@@ -1,6 +1,7 @@
 using ApplicationRegistry.Contracts;
 using ApplicationRegistry.Contracts.Models;
 using ApplicationRegistry.Contracts.Queries;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,15 @@ public class ApplicationsEndpoints : IEndpointsDefinition
 {
     public static void ConfigureEndpoints(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/v1/applications")
+        var versionSet = app.NewApiVersionSet()
+            .HasApiVersion(new ApiVersion(1.0))
+            .ReportApiVersions()
+            .Build();
+
+        var group = app.MapGroup("api/v{version:apiVersion}/applications")
             .WithTags("Applications")
-            .WithOpenApi();
+            .WithOpenApi()
+            .WithApiVersionSet(versionSet);
 
         group.MapGet("/", GetApplications)
             .Produces<PagedList<Application>>(200)

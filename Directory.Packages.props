@@ -1,5 +1,7 @@
 <Project>
   <ItemGroup>
+    <PackageVersion Include="Asp.Versioning.Http" Version="7.1.0" />
+    <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.1.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.17.5" />
     <PackageVersion Include="FluentResults" Version="3.15.2" />
