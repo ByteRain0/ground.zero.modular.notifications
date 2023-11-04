@@ -22,6 +22,7 @@ public static class SwaggerInstaller
                 opts.DefaultApiVersion = new ApiVersion(1.0);
                 opts.AssumeDefaultVersionWhenUnspecified = true;
                 opts.ApiVersionReader = new UrlSegmentApiVersionReader();
+                opts.ReportApiVersions = true;
             })
             .AddApiExplorer(opts =>
             {
@@ -31,7 +32,7 @@ public static class SwaggerInstaller
             .EnableApiVersionBinding();
 
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-        services.AddSwaggerGen(opts => opts.OperationFilter<SwaggerDefaultValues>());
+        services.AddSwaggerGen();
 
         return services;
     }

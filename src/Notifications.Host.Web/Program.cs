@@ -69,9 +69,10 @@ app.UseSwaggerUI(opts =>
     foreach (var description in app.DescribeApiVersions())
     {
         opts.SwaggerEndpoint(
-            $"/swagger/{description.GroupName}/swagger.json",
-            description.GroupName);
+            url: $"/swagger/{description.GroupName}/swagger.json",
+            name: description.GroupName);
     }
+
     opts.RoutePrefix = string.Empty;
 });
 

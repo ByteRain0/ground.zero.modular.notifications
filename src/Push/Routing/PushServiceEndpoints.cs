@@ -16,8 +16,6 @@ internal class PushServiceEndpoints : IEndpointsDefinition
     {
         var versionSet = app.NewApiVersionSet()
             .HasApiVersion(new ApiVersion(1.0))
-            .HasApiVersion(new ApiVersion(2.0))
-            .ReportApiVersions()
             .Build();
 
         app.MapPost("api/v{version:apiVersion}/events", ProcessIncomingEvent)
@@ -26,23 +24,12 @@ internal class PushServiceEndpoints : IEndpointsDefinition
             .Produces(200)
             .WithApiVersionSet(versionSet)
             .MapToApiVersion(1.0);
-
-        //Essentially you would create a same class structure for v2 if you want to have 2 versions at the same time
-        app.MapPost("api/v{version:apiVersion}/events", ProcessIncomingEvent)
-            .WithName("ProcessEvent_v2")
-            .ProducesValidationProblem()
-            .Produces(200)
-            .WithApiVersionSet(versionSet)
-            .MapToApiVersion(2.0);
     }
 
     private static async Task<IResult> ProcessIncomingEvent(
         [Validate][FromBody] IncomingEvent @event,
-        [FromServices] PushService pushService,
-        HttpContext context)
+        [FromServices] PushService pushService)
     {
-        var apiVersion = context.GetRequestedApiVersion();
-        Console.WriteLine(apiVersion);
         await pushService.ProcessIncomingEventAsync(@event);
         return Results.Ok();
     }
