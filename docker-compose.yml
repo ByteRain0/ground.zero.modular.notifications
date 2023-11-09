@@ -2,7 +2,7 @@ version: '3'
 name: notifications_system
 services:
   rabbitmq:
-    container_name: rabbitmq
+    container_name: notifications_system_rabbitmq
     image: "rabbitmq:3-management"
     ports:
       - "5672:5672" # RabbitMQ default port
@@ -12,13 +12,13 @@ services:
       RABBITMQ_DEFAULT_PASS: guest
 
   redis:
-    container_name: redis
+    container_name: notifications_system_redis
     image: "redis:latest"
     ports:
       - "6379:6379" # Redis default port
 
   mongodb:
-    container_name: mongodatabase
+    container_name: notifications_system_mongodatabase
     image: "mongo:latest"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=user
@@ -28,8 +28,8 @@ services:
       - "27017:27017" # MongoDB default port
 
   postgres:
+    container_name: notifications_system_database
     image: postgres:latest
-    container_name: database
     environment:
       POSTGRES_DB: mydatabase
       POSTGRES_USER: myuser
@@ -37,7 +37,30 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - notifications_system_postgres_data:/var/lib/postgresql/data
+
+  elasticsearch:
+    container_name: notifications_system_elasticsearch
+    image: "docker.elastic.co/elasticsearch/elasticsearch:8.7.1"
+    ports:
+      - "9200:9200"
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: false
+    volumes:
+      - notifications_system_elasticsearch_data:/usr/share/elasticsearch/data
+
+  kibana:
+    container_name: notifications_system_kibana
+    image: "docker.elastic.co/kibana/kibana:8.7.1"
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_URL: http://localhost:9200
+
 
 volumes:
-  postgres_data:
+  notifications_system_postgres_data:
+  notifications_system_elasticsearch_data:
