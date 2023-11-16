@@ -58,8 +58,7 @@ services:
     depends_on:
       - elasticsearch
     environment:
-      ELASTICSEARCH_URL: http://localhost:9200
-
+      ELASTICSEARCH_URL: elasticsearch:9200
 
 volumes:
   notifications_system_postgres_data:
