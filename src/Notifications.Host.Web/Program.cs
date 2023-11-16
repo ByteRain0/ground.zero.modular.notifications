@@ -5,10 +5,12 @@ using Hangfire;
 using Push;
 using Push.Routing;
 using Push.Service.Infrastructure;
+using Serilog;
 using Shared.Background;
 using Shared.Cache.Distributed;
 using Shared.Cache.Output;
 using Shared.ErrorHandling;
+using Shared.Logging;
 using Shared.Messaging;
 using Shared.Swagger;
 using Shared.TokenService;
@@ -21,6 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Register components
 builder.Services
+    .AddSerilogLogging(builder.Configuration)
     .AddBackgroundJobs(builder.Configuration)
     .AddGlobalErrorHandling()
     .AddCacheService(builder.Configuration)
@@ -38,6 +41,8 @@ builder.Services
     .AddApplicationRegistryService(builder.Configuration)
     .AddPushService(builder.Configuration)
     .AddEventsProcessor();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
