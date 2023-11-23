@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.HealthChecks;
 using Shared.Routing;
 
 namespace ApplicationRegistry.Infrastructure;
@@ -27,6 +28,11 @@ public static class ApplicationRegistryInstaller
         RecurringJob.AddOrUpdate("statistics", () =>
                 services.BuildServiceProvider().GetRequiredService<StatisticsService>().GatherStatisticsAsync(),
             Cron.Minutely());
+
+        services.AddHealthChecks()
+            .AddDbContextCheck<ApplicationDbContext>(
+                name: "efcontext",
+                tags: HealthConstants.ReadinessTags);
 
         return services;
     }

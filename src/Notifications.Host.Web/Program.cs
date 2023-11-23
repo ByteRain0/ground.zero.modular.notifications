@@ -10,6 +10,7 @@ using Shared.Background;
 using Shared.Cache.Distributed;
 using Shared.Cache.Output;
 using Shared.ErrorHandling;
+using Shared.HealthChecks;
 using Shared.Logging;
 using Shared.Messaging;
 using Shared.Swagger;
@@ -20,6 +21,8 @@ using WebHooks.WebHooksService.Routing;
 using WebHooks.WebHooksService.Services.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHealthChecks();
 
 // Register components
 builder.Services
@@ -37,7 +40,7 @@ builder.Services
     .AddTokenAccessor()
     .AddSwagger()
     .AddWebHooksService()
-    .AddWebHooksRepository()
+    .AddWebHooksRepository(builder.Configuration)
     .AddApplicationRegistryService(builder.Configuration)
     .AddPushService(builder.Configuration)
     .AddEventsProcessor();
@@ -80,5 +83,7 @@ app.UseSwaggerUI(opts =>
 
     opts.RoutePrefix = string.Empty;
 });
+
+app.UseHealthcheckPaths();
 
 app.Run();
