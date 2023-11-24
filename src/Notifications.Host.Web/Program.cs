@@ -2,6 +2,7 @@ using ApplicationRegistry.Infrastructure;
 using EventProcessor;
 using EventProcessor.Infrastructure;
 using Hangfire;
+using Microsoft.FeatureManagement;
 using Push;
 using Push.Routing;
 using Push.Service.Infrastructure;
@@ -43,7 +44,8 @@ builder.Services
     .AddWebHooksRepository(builder.Configuration)
     .AddApplicationRegistryService(builder.Configuration)
     .AddPushService(builder.Configuration)
-    .AddEventsProcessor();
+    .AddEventsProcessor()
+    .AddFeatureManagement();
 
 builder.Host.UseSerilog();
 

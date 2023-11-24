@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.FeatureManagement;
 using O9d.AspNet.FluentValidation;
 using Push.Contracts.Contract;
 using Push.Service;
+using Shared.Features;
 using Shared.Routing;
 
 namespace Push.Routing;
@@ -23,12 +25,14 @@ internal class PushServiceEndpoints : IEndpointsDefinition
             .ProducesValidationProblem()
             .Produces(200)
             .WithApiVersionSet(versionSet)
-            .MapToApiVersion(1.0);
+            .MapToApiVersion(1.0)
+            .WithFeatureFlag("events_push");
     }
 
     private static async Task<IResult> ProcessIncomingEvent(
         [Validate][FromBody] IncomingEvent @event,
-        [FromServices] PushService pushService)
+        [FromServices] PushService pushService,
+        IFeatureManager featureManager)
     {
         await pushService.ProcessIncomingEventAsync(@event);
         return Results.Ok();

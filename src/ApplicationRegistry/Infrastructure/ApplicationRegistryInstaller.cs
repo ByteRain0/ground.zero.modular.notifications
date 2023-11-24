@@ -25,9 +25,9 @@ public static class ApplicationRegistryInstaller
             .Decorate<IApplicationsRepository, ApplicationRepositoryCacheDecorator>();
         services.AddTransient<StatisticsService>();
         //Registering the background job example setup.
-        RecurringJob.AddOrUpdate("statistics", () =>
-                services.BuildServiceProvider().GetRequiredService<StatisticsService>().GatherStatisticsAsync(),
-            Cron.Minutely());
+        // RecurringJob.AddOrUpdate("statistics", () =>
+        //         services.BuildServiceProvider().GetRequiredService<StatisticsService>().GatherStatisticsAsync(),
+        //     Cron.Minutely());
 
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>(

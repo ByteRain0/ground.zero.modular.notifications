@@ -27,6 +27,7 @@
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="7.0.11" />
+    <PackageVersion Include="Microsoft.FeatureManagement.AspNetCore" Version="3.1.0" />
     <PackageVersion Include="MongoDB.Driver" Version="2.21.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
     <PackageVersion Include="RabbitMQ.Client" Version="6.5.0" />
